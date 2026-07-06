@@ -80,19 +80,19 @@ const questions = [
   { ctx: "work", dim: "selfRegulation", reverse: true, text: "事情一乱，我会先假装冷静，把烦躁、委屈或慌张都压到后面再说。" },
   { ctx: "work", dim: "boundaryExpression", reverse: true, text: "别人临时加需求时，我嘴上说可以，心里其实已经开始不爽。" },
   { ctx: "work", dim: "action", reverse: true, text: "我常把“再查一点、再想清楚一点”当成暂时不用开始的缓冲区。" },
-  { ctx: "work", dim: "responsibilityResilience", reverse: true, text: "延期或没做好时，我会先给自己找理由，比较晚才具体复盘哪些地方能改。" },
+  { ctx: "work", dim: "responsibilityResilience", reverse: true, consistency: true, text: "延期或没做好时，我会先给自己找理由，比较晚才具体复盘哪些地方能改。" },
   { ctx: "life", dim: "selfRegulation", reverse: true, text: "和亲近的人相处时，我容易把外面的压力带回家，却不明说自己怎么了。" },
   { ctx: "life", dim: "boundaryExpression", reverse: true, text: "我不想让关系变尴尬，所以会把一些不舒服先忍过去。" },
   { ctx: "life", dim: "action", text: "生活里想改变一件事时，我能先做一个很小但真实的动作，而不是只在脑子里重启人生。" },
   { ctx: "life", dim: "openness", reverse: true, text: "亲近的人指出我的问题时，我会先觉得被否定，之后才可能想他说得有没有道理。" },
-  { ctx: "life", dim: "boundaryExpression", reverse: true, text: "别人拒绝我时，我能理解他有边界，但心里还是会有点失落或多想。" },
+  { ctx: "life", dim: "boundaryExpression", reverse: true, consistency: true, text: "别人拒绝我时，我能理解他有边界，但心里还是会有点失落或多想。" },
   { ctx: "life", dim: "responsibilityResilience", text: "关系出现摩擦时，我能承认自己的部分，但不会把全部问题都揽到自己身上。" },
   { ctx: "work", dim: "action", text: "即使版本很粗糙，我也能先交出一个可以被反馈的东西。" },
   { ctx: "work", dim: "openness", reverse: true, text: "当别人质疑我的判断时，我表面在听，心里已经在组织反驳。" },
-  { ctx: "work", dim: "openness", reverse: true, text: "我很快能发现别人说法里的漏洞，但不太习惯主动寻找自己判断里的漏洞。" },
+  { ctx: "work", dim: "openness", reverse: true, consistency: true, text: "我很快能发现别人说法里的漏洞，但不太习惯主动寻找自己判断里的漏洞。" },
   { ctx: "work", dim: "responsibilityResilience", text: "被批评或指出问题后，我能提取可改的部分，而不是只记住受伤感。" },
   { ctx: "life", dim: "selfRegulation", text: "我能意识到自己什么时候是在逞强、讨好、回避或控制。" },
-  { ctx: "life", dim: "selfRegulation", reverse: true, text: "我情绪上来时，会先顾着自己的感受，比较晚才意识到对方也被影响了。" },
+  { ctx: "life", dim: "selfRegulation", reverse: true, consistency: true, text: "我情绪上来时，会先顾着自己的感受，比较晚才意识到对方也被影响了。" },
   { ctx: "life", dim: "boundaryExpression", text: "我能直接说出不方便、不愿意或不舒服，而不是期待别人自己看出来。" },
   { ctx: "life", dim: "action", reverse: true, text: "计划被打乱后，我很容易觉得算了，干脆整天都不要管了。" },
   { ctx: "life", dim: "openness", text: "我能分辨“我不喜欢这个说法”和“对方说得完全没道理”。" },
@@ -138,6 +138,7 @@ const riskHeading = document.querySelector("#risk-heading");
 const riskList = document.querySelector("#risk-list");
 const responsePattern = document.querySelector("#response-pattern");
 const deepAnalysis = document.querySelector("#deep-analysis");
+const consistencyBlindspot = document.querySelector("#consistency-blindspot");
 const blindspotDetails = document.querySelector("#blindspot-details");
 const restartButton = document.querySelector("#restart-button");
 const editButton = document.querySelector("#edit-button");
@@ -230,6 +231,20 @@ function calculateResponsePattern() {
   };
 }
 
+function calculateConsistencyBlindspot() {
+  const values = questions
+    .map((question, index) => (question.consistency ? answers[index] : null))
+    .filter((value) => value !== null);
+  const score = values.length ? (average(values) / 5) * 100 : 0;
+  const level = score >= 70 ? "high" : score >= 52 ? "medium" : "low";
+
+  return {
+    level,
+    score,
+    count: values.length
+  };
+}
+
 function showResults() {
   const scores = Object.values(calculateScores())
     .sort((a, b) => b.score - a.score);
@@ -246,6 +261,7 @@ function showResults() {
   const riskMode = lowScores.length >= 2 ? "blindspot" : "watch";
   const balancedCount = scores.filter((item) => item.score >= 64 && item.score <= 82).length;
   const responseInfo = calculateResponsePattern();
+  const consistencyInfo = calculateConsistencyBlindspot();
 
   const title = buildResultTitle(strengths[0], risks[0], {
     averageScore,
@@ -295,6 +311,7 @@ function showResults() {
     responseInfo,
     averageScore
   });
+  consistencyBlindspot.innerHTML = renderConsistencyBlindspot(consistencyInfo);
   blindspotDetails.innerHTML = risks.map((item) => renderBlindspot(item, riskMode)).join("");
 
   quizPanel.classList.add("is-hidden");
@@ -462,6 +479,38 @@ function renderDeepAnalysis(meta) {
       <p><strong>心理学视角：</strong>${topRisk.psychologist}：${topRisk.psychAnalysis}</p>
       <p><strong>关键追问：</strong>${topRisk.growthQuestion}</p>
       <p><strong>答题信号：</strong>${pressureLine}</p>
+    </div>
+  `;
+}
+
+function renderConsistencyBlindspot(info) {
+  const content = {
+    high: {
+      label: "信号明显",
+      body: "你这次的一致性盲区比较明显：你并不是故意双标，而是遇到自己的失误、边界、情绪或判断漏洞时，会更容易先找解释；遇到别人类似的反应时，则更容易先看见问题。",
+      psychology: "社会心理学里常说的自利性归因会解释这种现象：人会倾向于用情境解释自己，用行为评价别人。这能保护自尊，但也会让复盘变慢。",
+      action: "下次评价别人之前，先问一句：如果这件事发生在我身上，我会给自己什么解释？下次替自己解释之前，再问一句：如果这是别人做的，我会怎么看？"
+    },
+    medium: {
+      label: "有轻微信号",
+      body: "你有一些一致性盲区信号，但不算强。你大体能理解别人，也能反省自己，只是在压力、被拒绝或被指出问题时，还是会短暂地给自己更多解释空间。",
+      psychology: "这更像认知失调：当“我想成为公平理性的人”和“我此刻也有私心或防御”冲突时，大脑会先帮自己找一个舒服的解释。",
+      action: "不用急着批判自己，只要把解释往后放 10 秒：先看事实，再给原因。"
+    },
+    low: {
+      label: "信号不强",
+      body: "你这次的一致性盲区不明显。你比较能把同一套标准同时放在自己和别人身上，也更容易承认：我有我的理由，但别人也可能有他的理由。",
+      psychology: "这说明你的自我观察和换位能力相对稳定。不过人在压力下仍然会保护自己，所以这个盲区不是消失了，只是这次没有明显冒头。",
+      action: "继续保留一个习惯：评价自己和评价别人时，都先区分事实、解释和感受。"
+    }
+  }[info.level];
+
+  return `
+    <h3>一致性盲区</h3>
+    <div class="deep-grid">
+      <p><strong>${content.label}：</strong>${content.body}</p>
+      <p><strong>心理学视角：</strong>${content.psychology}</p>
+      <p><strong>调整方法：</strong>${content.action}</p>
     </div>
   `;
 }
