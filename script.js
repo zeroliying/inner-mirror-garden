@@ -90,6 +90,7 @@ const scaleLabels = [
 let currentIndex = 0;
 const answers = Array(questions.length).fill(null);
 const hesitations = Array(questions.length).fill(false);
+const hesitationAutoAnswers = Array(questions.length).fill(false);
 const answerChanges = Array(questions.length).fill(0);
 
 const progressCount = document.querySelector("#progress-count");
@@ -580,16 +581,29 @@ scaleOptions.addEventListener("click", (event) => {
   if (!option) return;
   const previousAnswer = answers[currentIndex];
   const nextAnswer = Number(option.dataset.value);
-  if (previousAnswer !== null && previousAnswer !== nextAnswer) {
+  if (previousAnswer !== null && previousAnswer !== nextAnswer && !hesitationAutoAnswers[currentIndex]) {
     answerChanges[currentIndex] += 1;
   }
   answers[currentIndex] = nextAnswer;
+  hesitationAutoAnswers[currentIndex] = false;
   renderQuestion();
   renderProgress();
 });
 
 hesitationToggle.addEventListener("click", () => {
-  hesitations[currentIndex] = !hesitations[currentIndex];
+  const nextHesitationState = !hesitations[currentIndex];
+  hesitations[currentIndex] = nextHesitationState;
+
+  if (nextHesitationState && answers[currentIndex] === null) {
+    answers[currentIndex] = 3;
+    hesitationAutoAnswers[currentIndex] = true;
+  }
+
+  if (!nextHesitationState && hesitationAutoAnswers[currentIndex]) {
+    answers[currentIndex] = null;
+    hesitationAutoAnswers[currentIndex] = false;
+  }
+
   renderQuestion();
   renderProgress();
 });
@@ -631,6 +645,7 @@ editButton.addEventListener("click", () => {
 restartButton.addEventListener("click", () => {
   answers.fill(null);
   hesitations.fill(false);
+  hesitationAutoAnswers.fill(false);
   answerChanges.fill(0);
   currentIndex = 0;
   resultsPanel.classList.add("is-hidden");
