@@ -2,41 +2,41 @@ const dimensions = {
   selfRegulation: {
     name: "觉察与调节",
     strength: "你能看见自己的情绪和惯性反应，也有机会在反应前多留一点空间。",
-    risk: "压力上来时可能先压住、硬扛或回避，事后才发现自己被情绪推着走。",
-    cause: "你可能习惯先保证局面稳定，或者太快进入解决问题模式，导致感受没有被及时处理。",
-    advice: "先做 30 秒情绪命名：我现在是焦虑、委屈、生气，还是害怕失控。",
+    risk: "压力上来时，你容易先压住、硬扛或回避，事后才发现自己被情绪推着走。",
+    cause: "你习惯先保证局面稳定，或者太快进入解决问题模式，导致感受没有被及时处理。",
+    advice: "先做 30 秒情绪命名：我现在是焦虑、委屈、生气，还是害怕失控；命名后再决定要不要回应。",
     practice: ["情绪命名", "暂停再回应", "复盘触发点"]
   },
   boundaryExpression: {
     name: "边界与表达",
     strength: "你能在关系和合作里表达真实需求，也更不容易被别人的期待完全带走。",
-    risk: "可能为了维持关系、避免冲突或显得好相处，把真实想法压下去。",
-    cause: "你可能把清晰表达等同于强硬，也担心拒绝或不同意见会伤害关系。",
-    advice: "用“我的结论 + 原因 + 我能做到/做不到什么”来表达，少用暗示。",
+    risk: "你容易为了维持关系、避免冲突或显得好相处，把真实想法压下去。",
+    cause: "你把清晰表达和强硬划上等号，也担心拒绝或不同意见会伤害关系。",
+    advice: "用“我的结论 + 原因 + 我能做到/做不到什么”来表达，少用暗示，也少等别人自己察觉。",
     practice: ["先说结论", "延迟答应", "具体请求"]
   },
   action: {
     name: "行动与推进",
     strength: "你能把想法转成具体动作，愿意先用小步骤制造反馈。",
-    risk: "可能在不确定、怕麻烦或怕做不好时卡住，把启动拖到很后面。",
-    cause: "你可能需要更多安全感才敢开始，或者把开始行动和必须做好绑定得太紧。",
-    advice: "把目标压缩成 15 分钟内可完成的一步，只要求启动，不要求完美。",
+    risk: "你容易在不确定、怕麻烦或怕做不好时卡住，把启动拖到很后面。",
+    cause: "你需要更多安全感才敢开始，或者把开始行动和必须做好绑定得太紧。",
+    advice: "把目标压缩成 15 分钟内可完成的一步，先交出一个粗糙版本，再用反馈修正。",
     practice: ["最小行动", "限定准备时间", "先反馈后优化"]
   },
   openness: {
     name: "开放与学习",
     strength: "你愿意接收不同观点，也能在新信息出现时调整自己的解释。",
-    risk: "当意见挑战到自尊或经验时，可能过早防御，错过有用信息。",
-    cause: "大脑会本能保护已有判断，尤其在被评价、被否定或亲近关系里更明显。",
-    advice: "听到不同意见时先问一个澄清问题，再决定自己同不同意。",
+    risk: "当意见挑战到自尊或经验时，你容易过早防御，错过有用信息。",
+    cause: "你会本能保护已有判断，尤其在被评价、被否定或亲近关系里更明显。",
+    advice: "听到不同意见时先问一个澄清问题，再决定自己同不同意；不要一边听一边急着反驳。",
     practice: ["先问后判", "寻找反例", "区分偏好与事实"]
   },
   responsibilityResilience: {
     name: "责任与复原",
     strength: "你重承诺，也能在挫折后重新组织节奏，而不是一直停在自责里。",
-    risk: "可能把太多结果归因到自己身上，遇到挫折时压力和自我否定同时上升。",
-    cause: "你可能把“事情做好”和“我必须负责所有结果”绑得太紧，忽略了边界和外部条件。",
-    advice: "复盘时分三栏写：我的部分、别人的部分、环境条件；只改自己能控制的下一步。",
+    risk: "你容易把太多结果归因到自己身上，遇到挫折时压力和自我否定同时上升。",
+    cause: "你把“事情做好”和“我必须负责所有结果”绑得太紧，忽略了边界和外部条件。",
+    advice: "复盘时分三栏写：我的部分、别人的部分、环境条件；只为自己能控制的下一步负责。",
     practice: ["拆分责任", "暴露风险", "把失败具体化"]
   }
 };
@@ -429,15 +429,15 @@ function renderMiniRisk(item, mode) {
   const text = mode === "context"
     ? renderContextMiniText(item)
     : mode === "blindspot"
-      ? `这部分值得温柔但认真地看一看。${item.risk}`
-      : `这不是明显短板，也不用紧张；它只是当前结果里更值得观察的一处细节。${item.risk}`;
+      ? `短板表现：${item.risk}建议先抓一个最常出现的场景练习，不要只停留在理解层面。`
+      : `相对短板：${item.risk}虽然不是最低分，但它仍然可能在压力或关系里反复出现，需要持续观察和练习。`;
   return `<p class="mini-item"><strong>${item.name}</strong>${text}</p>`;
 }
 
 function renderContextMiniText(item) {
   const strongerContext = item.diff >= 0 ? contexts.work : contexts.life;
   const weakerContext = item.diff >= 0 ? contexts.life : contexts.work;
-  return `${strongerContext.shortName}明显更容易发挥，${weakerContext.shortName}更容易卡住。这更像场景切换带来的差异，不代表你缺少这项能力，只是它还没有在每个场合都被你稳定调动出来。`;
+  return `你在${strongerContext.shortName}能发挥，但在${weakerContext.shortName}不稳定，说明这项能力还没有真正迁移到所有场景。建议把高分场景里有效的做法拆成一个动作，复制到低分场景里练。`;
 }
 
 function renderContextSummary(items) {
@@ -536,17 +536,15 @@ function renderBlindspot(item, mode) {
   if (mode === "context") {
     return renderContextBlindspot(item);
   }
-  const riskLabel = mode === "blindspot" ? "可能的短板" : "观察点";
-  const riskText = mode === "blindspot"
-    ? `先不用慌，这不是在说你“不好”，而是在指出一个可以被照顾和练习的模式。${item.risk}`
-    : `这不是明显短板，但相对值得多观察。看到这里已经说明你愿意多理解自己一点。${item.risk}`;
+  const riskLabel = mode === "blindspot" ? "短板表现" : "相对短板";
+  const riskText = item.risk;
   return `
     <article class="detail-card">
       <h3>${item.name}</h3>
       <p><strong>${riskLabel}：</strong>${riskText}</p>
-      <p><strong>可能原因：</strong>${item.cause}</p>
-      <p><strong>温和改进：</strong>${item.advice}</p>
-      <p><strong>本周小动作：</strong>选择一个真实场景，只练习一个动作；完成后记录“我做了什么、效果如何、下次微调什么”。不用一次改变很多，能开始观察就已经很好。</p>
+      <p><strong>形成原因：</strong>${item.cause}</p>
+      <p><strong>改进方法：</strong>${item.advice}</p>
+      <p><strong>本周练习：</strong>选择一个真实场景，只练习一个动作；完成后记录“我做了什么、效果如何、下次微调什么”。重点不是一次改变很多，而是让这个短板进入可练习状态。</p>
       <div class="tag-line">${item.practice.map((tag) => `<span>${tag}</span>`).join("")}</div>
     </article>
   `;
@@ -558,10 +556,10 @@ function renderContextBlindspot(item) {
   return `
     <article class="detail-card">
       <h3>${item.name}</h3>
-      <p><strong>观察点：</strong>${renderContextMiniText(item)}</p>
-      <p><strong>可能原因：</strong>${strongerContext.higher}${weakerContext.lower}</p>
-      <p><strong>温和改进：</strong>把${strongerContext.shortName}里已经有效的做法，复制一个最小版本到${weakerContext.shortName}：只复制一个动作，不要求整套状态都一样。</p>
-      <p><strong>本周小动作：</strong>找一个${weakerContext.shortName}里的真实场景，提前写下“我准备怎么回应/怎么开始/怎么设边界”，完成后再复盘差异。做不到也没关系，先看见差异就已经是进步。</p>
+      <p><strong>短板表现：</strong>${renderContextMiniText(item)}</p>
+      <p><strong>形成原因：</strong>${strongerContext.higher}${weakerContext.lower}</p>
+      <p><strong>改进方法：</strong>把${strongerContext.shortName}里已经有效的做法，复制一个最小版本到${weakerContext.shortName}：只复制一个动作，不要求整套状态都一样。</p>
+      <p><strong>本周练习：</strong>找一个${weakerContext.shortName}里的真实场景，提前写下“我准备怎么回应/怎么开始/怎么设边界”，完成后复盘差异。如果没做到，也要写清楚卡在哪一步。</p>
       <div class="tag-line"><span>场景迁移</span><span>提前预案</span><span>小步复制</span></div>
     </article>
   `;
