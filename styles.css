@@ -349,6 +349,7 @@ h1 {
   margin-bottom: 16px;
   color: #37464d;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .share-privacy {

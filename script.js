@@ -161,9 +161,10 @@ const editButton = document.querySelector("#edit-button");
 let currentSharePayload = null;
 
 function init() {
+  bindTabs();
+  if (loadSharedResult()) return;
   renderQuestion();
   renderProgress();
-  bindTabs();
 }
 
 function renderQuestion() {
@@ -306,7 +307,7 @@ function showResults() {
     responseInfo
   });
   shareTitle.textContent = `我是「${title}」`;
-  copyShareButton.textContent = "复制分享文案";
+  copyShareButton.textContent = "复制结果链接";
   renderShareCard();
 
   scoreGrid.innerHTML = scores
@@ -402,32 +403,70 @@ function buildResultSummary(strengths, risks, meta) {
   return paragraphs.map((text) => `<p>${text}</p>`).join("");
 }
 
-function buildShareText(payload, hideWeakness = false) {
-  const { title, keywords, strengths, risks, riskMode, responseInfo } = payload;
-  const strengthNames = strengths.map((item) => item.name).join(" + ");
-  const riskNames = risks.map((item) => item.name).join(" + ");
-  const hook = getShareHook(title);
-  const keywordLine = keywords.length ? `关键词：${keywords.join(" / ")}。` : "";
-  const riskLine = hideWeakness
-    ? "我这次选择先隐藏性格盲区，只公开我的优势版本。"
-    : riskMode === "blindspot"
-      ? `我的性格盲区：${riskNames}，看见短板但先不慌。`
-      : `我的性格盲区：${riskNames}，不是给自己扣分，是值得认真看的地方。`;
-  const hesitationLine = responseInfo.level === "veryHigh"
-    ? "答题时我非常犹豫，看来我是个需要慢慢校准答案的人。"
-    : responseInfo.level === "high"
-    ? "答题时我还挺犹豫，看来我是个需要结合具体事件理解的人。"
-    : "";
-
-  return `我的性格测试结果是「${title}」：${hook}${keywordLine}我的优势关键词是 ${strengthNames}。${riskLine}${hesitationLine} 这个测试还挺适合发给朋友互相对照。`;
-}
-
 function renderShareCard() {
   if (!currentSharePayload) return;
-  const shareText = buildShareText(currentSharePayload, hideWeaknessToggle.checked);
-  shareCopy.textContent = shareText;
-  copyShareButton.dataset.shareText = shareText;
-  copyShareButton.textContent = "复制分享文案";
+  const shareUrl = buildResultUrl(hideWeaknessToggle.checked);
+  shareCopy.textContent = shareUrl;
+  copyShareButton.dataset.shareText = shareUrl;
+  copyShareButton.textContent = "复制结果链接";
+}
+
+function buildResultUrl(hideWeakness = false) {
+  const url = new URL(window.location.href);
+  url.hash = `result=${encodeResultState(hideWeakness)}`;
+  return url.toString();
+}
+
+function encodeResultState(hideWeakness = false) {
+  const payload = {
+    v: 1,
+    a: answers,
+    h: hesitations.map((item) => (item ? 1 : 0)),
+    c: answerChanges.map((count) => (count > 0 ? 1 : 0)),
+    hide: hideWeakness ? 1 : 0
+  };
+  return btoa(JSON.stringify(payload)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function decodeResultState(value) {
+  try {
+    const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "=");
+    const payload = JSON.parse(atob(padded));
+    if (!Array.isArray(payload.a) || payload.a.length !== questions.length) return null;
+    if (!Array.isArray(payload.h) || payload.h.length !== questions.length) return null;
+    if (!Array.isArray(payload.c) || payload.c.length !== questions.length) return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+function loadSharedResult() {
+  const params = new URLSearchParams((window.location.hash || "").replace(/^#/, ""));
+  const encodedResult = params.get("result");
+  if (!encodedResult) return false;
+
+  const payload = decodeResultState(encodedResult);
+  if (!payload) return false;
+
+  payload.a.forEach((answer, index) => {
+    answers[index] = Number.isInteger(answer) && answer >= 1 && answer <= 5 ? answer : null;
+  });
+  payload.h.forEach((item, index) => {
+    hesitations[index] = item === 1;
+  });
+  payload.c.forEach((item, index) => {
+    answerChanges[index] = item === 1 ? 1 : 0;
+  });
+
+  if (answers.some((answer) => answer === null)) return false;
+
+  hideWeaknessToggle.checked = payload.hide === 1;
+  currentIndex = questions.length - 1;
+  renderProgress();
+  showResults();
+  return true;
 }
 
 function getShareHook(title) {
