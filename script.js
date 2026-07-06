@@ -5,6 +5,10 @@ const dimensions = {
     risk: "压力上来时，你容易先压住、硬扛或回避，事后才发现自己被情绪推着走。",
     cause: "你习惯先保证局面稳定，或者太快进入解决问题模式，导致感受没有被及时处理。",
     advice: "先做 30 秒情绪命名：我现在是焦虑、委屈、生气，还是害怕失控；命名后再决定要不要回应。",
+    edge: "你不是没有情绪，而是比很多人更早发现情绪在改变方向。",
+    shadow: "压力大时，你会把“我没事”当成默认反应，直到身体、语气或关系替你暴露真实状态。",
+    cost: "别人可能以为你很好沟通，但真正的压力被延迟处理，最后会用更重的方式反弹。",
+    growthQuestion: "下一次你说“没事”之前，能不能先问自己：我是真的没事，还是暂时不想处理？",
     practice: ["情绪命名", "暂停再回应", "复盘触发点"]
   },
   boundaryExpression: {
@@ -13,6 +17,10 @@ const dimensions = {
     risk: "你容易为了维持关系、避免冲突或显得好相处，把真实想法压下去。",
     cause: "你把清晰表达和强硬划上等号，也担心拒绝或不同意见会伤害关系。",
     advice: "用“我的结论 + 原因 + 我能做到/做不到什么”来表达，少用暗示，也少等别人自己察觉。",
+    edge: "你有机会把温和与清晰同时做到，不需要靠翻脸来证明边界。",
+    shadow: "你会先吞下不舒服，等到忍不住时才突然变冷、撤退或爆发。",
+    cost: "关系表面维持住了，但别人不知道你的真实底线，你也会越来越觉得自己被消耗。",
+    growthQuestion: "下一次想答应别人之前，能不能先说：我需要想一下，再回复你。",
     practice: ["先说结论", "延迟答应", "具体请求"]
   },
   action: {
@@ -21,6 +29,10 @@ const dimensions = {
     risk: "你容易在不确定、怕麻烦或怕做不好时卡住，把启动拖到很后面。",
     cause: "你需要更多安全感才敢开始，或者把开始行动和必须做好绑定得太紧。",
     advice: "把目标压缩成 15 分钟内可完成的一步，先交出一个粗糙版本，再用反馈修正。",
+    edge: "你一旦动起来，反馈会很快变成燃料，事情也更容易被你推开。",
+    shadow: "你不是没想法，而是容易把“还没准备好”包装成“我再想想”。",
+    cost: "机会会在反复酝酿里变旧，别人看到的是拖延，你自己感受到的是越来越重的心理负担。",
+    growthQuestion: "下一件事能不能先做一个丑版本，允许它不完整，但必须真实存在？",
     practice: ["最小行动", "限定准备时间", "先反馈后优化"]
   },
   openness: {
@@ -29,6 +41,10 @@ const dimensions = {
     risk: "当意见挑战到自尊或经验时，你容易过早防御，错过有用信息。",
     cause: "你会本能保护已有判断，尤其在被评价、被否定或亲近关系里更明显。",
     advice: "听到不同意见时先问一个澄清问题，再决定自己同不同意；不要一边听一边急着反驳。",
+    edge: "你有能力更新自己，而不是永远困在第一次判断里。",
+    shadow: "你表面在听，心里已经开始准备反驳材料，尤其当对方说中了你不想承认的部分。",
+    cost: "你会错过真正有价值的提醒，也容易让别人觉得和你讨论问题很累。",
+    growthQuestion: "下一次想反驳时，能不能先问：你这样判断的依据是什么？",
     practice: ["先问后判", "寻找反例", "区分偏好与事实"]
   },
   responsibilityResilience: {
@@ -37,6 +53,10 @@ const dimensions = {
     risk: "你容易把太多结果归因到自己身上，遇到挫折时压力和自我否定同时上升。",
     cause: "你把“事情做好”和“我必须负责所有结果”绑得太紧，忽略了边界和外部条件。",
     advice: "复盘时分三栏写：我的部分、别人的部分、环境条件；只为自己能控制的下一步负责。",
+    edge: "你能托住事，也能在混乱之后重新找回节奏。",
+    shadow: "你会把负责变成自我审判，好像只要结果不好，就说明你这个人不够好。",
+    cost: "你可能越来越可靠，也越来越累；别人习惯你兜底，你却很少把压力分出去。",
+    growthQuestion: "下一次复盘时，能不能明确写下：这件事有哪一部分不该由我负责？",
     practice: ["拆分责任", "暴露风险", "把失败具体化"]
   }
 };
@@ -57,26 +77,26 @@ const contexts = {
 };
 
 const questions = [
-  { ctx: "work", dim: "selfRegulation", text: "任务推进不顺时，我能分辨自己是在焦虑、抗拒，还是单纯信息不够。" },
-  { ctx: "work", dim: "boundaryExpression", text: "面对临时加来的任务，我能说明它会影响哪些已有优先级。" },
-  { ctx: "work", dim: "action", text: "面对一个模糊目标，我会先做一个小版本，而不是一直等待条件成熟。" },
-  { ctx: "work", dim: "openness", text: "别人提出不同方案时，我会先理解依据，再决定是否采纳。" },
-  { ctx: "work", dim: "responsibilityResilience", text: "当事情推进不顺时，我会及时暴露风险，而不是独自硬扛。" },
-  { ctx: "life", dim: "selfRegulation", text: "和亲近的人相处时，我能察觉自己是在逞强、讨好、回避还是控制。" },
-  { ctx: "life", dim: "boundaryExpression", text: "亲友提出请求时，我能判断自己是否真的有余力答应。" },
-  { ctx: "life", dim: "action", text: "生活里想改善一件事时，我能先做一个小改变，而不是一直想很久。" },
-  { ctx: "life", dim: "openness", text: "亲近的人指出我的问题时，我能先听完，而不是马上防御。" },
-  { ctx: "life", dim: "responsibilityResilience", text: "关系出现摩擦时，我能看到自己的部分，但不会把所有问题都揽到自己身上。" },
-  { ctx: "work", dim: "selfRegulation", text: "压力很大时，我有办法让自己恢复，而不是只靠硬撑完成任务。" },
-  { ctx: "work", dim: "boundaryExpression", text: "在合作里，即使意见不同，我也能把真实想法说出来。" },
-  { ctx: "work", dim: "action", text: "即使还没完全准备好，我也能先开始做一小步。" },
-  { ctx: "work", dim: "openness", text: "当事实证明原方案不合适时，我能调整判断，而不是维护面子。" },
-  { ctx: "work", dim: "responsibilityResilience", text: "被批评或指出问题后，我能提取有用信息，而不是只记住受伤感。" },
-  { ctx: "life", dim: "selfRegulation", text: "我能察觉自己什么时候把外部压力带进了日常相处。" },
-  { ctx: "life", dim: "boundaryExpression", text: "我不会为了显得好相处，而隐藏重要的不满或不同意见。" },
-  { ctx: "life", dim: "action", text: "日常计划被打乱时，我能重新安排一个可执行的小步骤。" },
+  { ctx: "work", dim: "selfRegulation", reverse: true, text: "事情一乱，我会先假装冷静，把烦躁、委屈或慌张都压到后面再说。" },
+  { ctx: "work", dim: "boundaryExpression", reverse: true, text: "别人临时加需求时，我嘴上说可以，心里其实已经开始不爽。" },
+  { ctx: "work", dim: "action", reverse: true, text: "我常把“再查一点、再想清楚一点”当成暂时不用开始的缓冲区。" },
+  { ctx: "work", dim: "openness", text: "别人推翻我的方案时，我能先听清楚问题在哪里，而不是急着证明自己没错。" },
+  { ctx: "work", dim: "responsibilityResilience", reverse: true, text: "项目出问题时，我第一反应是怀疑自己是不是不够好，而不是先拆责任边界。" },
+  { ctx: "life", dim: "selfRegulation", reverse: true, text: "和亲近的人相处时，我容易把外面的压力带回家，却不明说自己怎么了。" },
+  { ctx: "life", dim: "boundaryExpression", reverse: true, text: "我不想让关系变尴尬，所以会把一些不舒服先忍过去。" },
+  { ctx: "life", dim: "action", text: "生活里想改变一件事时，我能先做一个很小但真实的动作，而不是只在脑子里重启人生。" },
+  { ctx: "life", dim: "openness", reverse: true, text: "亲近的人指出我的问题时，我会先觉得被否定，之后才可能想他说得有没有道理。" },
+  { ctx: "life", dim: "responsibilityResilience", text: "关系出现摩擦时，我能承认自己的部分，但不会把全部问题都揽到自己身上。" },
+  { ctx: "work", dim: "selfRegulation", text: "压力很大时，我能看出自己是在硬撑，并主动安排恢复，而不是只靠意志力顶完。" },
+  { ctx: "work", dim: "boundaryExpression", text: "在合作里，即使我知道对方可能不高兴，也能把关键不同意见说出来。" },
+  { ctx: "work", dim: "action", text: "即使版本很粗糙，我也能先交出一个可以被反馈的东西。" },
+  { ctx: "work", dim: "openness", reverse: true, text: "当别人质疑我的判断时，我表面在听，心里已经在组织反驳。" },
+  { ctx: "work", dim: "responsibilityResilience", text: "被批评或指出问题后，我能提取可改的部分，而不是只记住受伤感。" },
+  { ctx: "life", dim: "selfRegulation", text: "我能意识到自己什么时候是在逞强、讨好、回避或控制。" },
+  { ctx: "life", dim: "boundaryExpression", text: "我能直接说出不方便、不愿意或不舒服，而不是期待别人自己看出来。" },
+  { ctx: "life", dim: "action", reverse: true, text: "计划被打乱后，我很容易觉得算了，干脆整天都不要管了。" },
   { ctx: "life", dim: "openness", text: "我能分辨“我不喜欢这个说法”和“对方说得完全没道理”。" },
-  { ctx: "life", dim: "responsibilityResilience", text: "生活里遇到挫折后，我能保留基本节奏，而不是彻底摆烂。" }
+  { ctx: "life", dim: "responsibilityResilience", reverse: true, text: "生活里出问题后，我会反复想自己哪里不够好，越想越难重新开始。" }
 ];
 
 const scaleLabels = [
@@ -118,6 +138,7 @@ const strengthList = document.querySelector("#strength-list");
 const riskHeading = document.querySelector("#risk-heading");
 const riskList = document.querySelector("#risk-list");
 const responsePattern = document.querySelector("#response-pattern");
+const deepAnalysis = document.querySelector("#deep-analysis");
 const contextSummary = document.querySelector("#context-summary");
 const contextGrid = document.querySelector("#context-grid");
 const blindspotDetails = document.querySelector("#blindspot-details");
@@ -182,7 +203,7 @@ function renderProgress() {
 function calculateScores(includePartial = false) {
   return Object.keys(dimensions).reduce((acc, key) => {
     const values = questions
-      .map((question, index) => (question.dim === key ? answers[index] : null))
+      .map((question, index) => (question.dim === key ? getScoredAnswer(question, answers[index]) : null))
       .filter((value) => value !== null);
     const expected = questions.filter((question) => question.dim === key).length;
     const score = values.length ? (values.reduce((sum, value) => sum + value, 0) / values.length) * 20 : 0;
@@ -201,7 +222,7 @@ function calculateContextScores() {
   return Object.keys(dimensions).map((key) => {
     const contextScores = Object.keys(contexts).reduce((acc, ctxKey) => {
       const values = questions
-        .map((question, index) => (question.dim === key && question.ctx === ctxKey ? answers[index] : null))
+        .map((question, index) => (question.dim === key && question.ctx === ctxKey ? getScoredAnswer(question, answers[index]) : null))
         .filter((value) => value !== null);
       acc[ctxKey] = values.length ? (values.reduce((sum, value) => sum + value, 0) / values.length) * 20 : 0;
       return acc;
@@ -215,6 +236,11 @@ function calculateContextScores() {
       diff: contextScores.work - contextScores.life
     };
   });
+}
+
+function getScoredAnswer(question, answer) {
+  if (answer === null) return null;
+  return question.reverse ? 6 - answer : answer;
 }
 
 function calculateResponsePattern() {
@@ -305,6 +331,15 @@ function showResults() {
   strengthList.innerHTML = strengths.map((item) => renderMiniStrength(item, strengthMode)).join("");
   riskList.innerHTML = risks.map((item) => renderMiniRisk(item, riskMode)).join("");
   responsePattern.innerHTML = renderResponsePattern(responseInfo);
+  deepAnalysis.innerHTML = renderDeepAnalysis({
+    strengths,
+    risks,
+    riskMode,
+    responseInfo,
+    contextDiffs,
+    averageScore,
+    scoreSpread
+  });
   contextSummary.innerHTML = renderContextSummary(contextScores);
   contextGrid.innerHTML = contextDiffs.map(renderContextCard).join("");
   blindspotDetails.innerHTML = risks.map((item) => renderBlindspot(item, riskMode)).join("");
@@ -352,23 +387,23 @@ function buildResultSummary(strengths, risks, meta) {
   const strengthNames = strengths.map((item) => item.name).join("、");
   const riskNames = risks.map((item) => item.name).join("、");
   const responseNote = meta.responseInfo.level === "high"
-    ? "另外，你在不少题目上出现犹豫或中间选择，这不是问题，反而说明你在认真分辨自己。很多真实的人都不是单一模式，具体对象、压力和场景都会影响我们的表现。"
+    ? "另外，你在不少题目上出现犹豫或中间选择，这不是问题，反而说明你对自己的模式没有粗暴盖章。你可能不是“没特点”，而是会随对象、压力和场景切换不同版本。"
     : meta.responseInfo.level === "medium"
-      ? "有些题目你可能并不容易一眼判断，这很正常，也说明你没有粗暴地给自己贴标签。建议结合具体场景看结果。"
+      ? "有些题目你可能并不容易一眼判断，这很正常，也说明你的行为不是单一公式。建议结合具体场景看结果，尤其要看哪些关系、哪些压力会触发变化。"
       : "";
   const strengthLead =
     meta.strengthMode === "strong"
-      ? `你的突出资源是${strengthNames}，这很值得被认真肯定。它们不是理所当然的“应该做到”，而是你已经发展出来的能力。`
-      : `这次没有特别尖锐的高分项，但${strengthNames}仍然是相对更能托住你的部分，也值得被看见和肯定。`;
+      ? `你的突出资源是${strengthNames}，这不是普通的“表现好”，而是你已经形成的一套自我运转方式。`
+      : `这次没有特别尖锐的高分项，但${strengthNames}仍然是相对更能托住你的部分，说明你不是没有资源，只是优势还不够外显。`;
   const riskLead =
     meta.riskMode === "context"
-      ? `更值得看的不是单一维度高低，而是${riskNames}在两个场景里的差异。`
+      ? `真正值得看的不是单一维度高低，而是${riskNames}在两个场景里的断层：你不是不会，而是没有稳定迁移。`
       : meta.riskMode === "blindspot"
-      ? `需要优先留意的是${riskNames}，但请先记住：看见短板不是失败，愿意诚实面对它已经很勇敢。`
-      : `暂时没有明显低分项，${riskNames}更适合作为相对观察点。`;
+      ? `需要优先留意的是${riskNames}，这些地方最容易在压力、亲密关系或被评价时露出真实惯性。但请先记住：看见短板不是失败，愿意诚实面对它已经很勇敢。`
+      : `暂时没有明显低分项，${riskNames}更像相对弱点：平时不一定拖后腿，但在关键情境里会影响你的表达、行动或恢复速度。`;
   const balanceLead =
     meta.balancedCount >= 4
-      ? "整体分布较均衡，建议从最影响现实关系和效率的一项开始调整。"
+      ? "整体分布较均衡的人，短板往往不明显，但会以“小卡顿”的形式反复出现，建议从最影响现实关系和效率的一项开始调整。"
       : "";
 
   return `${strengthLead}${riskLead}这些不是定论，也不是给你下结论；它们只是帮你把一些平时容易忽略的模式照亮一点。${balanceLead}${responseNote}`;
@@ -421,8 +456,8 @@ function getShareHook(title) {
 function renderMiniStrength(item, mode) {
   const text =
     mode === "strong"
-      ? `这是你很珍贵的一部分。${item.strength}请不要把它当成“本来就该会”，它说明你已经积累了可依靠的内在资源。接下来可以有意识地把它用在更重要的关系或目标上。`
-      : `相对来看，这一项比其他部分更能支撑你，也值得被肯定。${item.strength}它可能不是特别张扬的优势，但已经在帮你稳住一些局面。`;
+      ? `这是你很珍贵的一部分。${item.strength}${item.edge}请不要把它当成“本来就该会”，它说明你已经积累了可依靠的内在资源。`
+      : `相对来看，这一项比其他部分更能支撑你。${item.strength}${item.edge}它可能不是特别张扬的优势，但已经在帮你稳住一些局面。`;
   return `<p class="mini-item"><strong>${item.name}</strong>${text}</p>`;
 }
 
@@ -533,6 +568,36 @@ function renderResponsePattern(info) {
   `;
 }
 
+function renderDeepAnalysis(meta) {
+  const topStrength = meta.strengths[0];
+  const topRisk = meta.risks[0];
+  const secondRisk = meta.risks[1] || meta.risks[0];
+  const strongestSplit = meta.contextDiffs[0];
+  const contextLine = Math.abs(strongestSplit.diff) >= 8
+    ? renderContextMiniText(strongestSplit)
+    : "你的两个场景差异不算大，说明问题不太像“换个场合就变一个人”，更像某些固定压力触发了固定反应。";
+  const tensionLine = meta.riskMode === "context"
+    ? `你的核心矛盾不是能力缺失，而是场景切换：${contextLine}`
+    : `你的核心矛盾是：你有${topStrength.name}这类资源，但${topRisk.name}会在关键时刻拖住你。换句话说，你不是没有能力，而是某些旧反应会抢在能力前面启动。`;
+  const pressureLine = meta.responseInfo.level === "high"
+    ? "答题里的犹豫说明你对自己并非毫无觉察，只是你的状态很依赖情境。你需要的不是一个固定标签，而是一张触发地图：谁、什么压力、哪类评价最容易让你变形。"
+    : meta.responseInfo.level === "medium"
+      ? "你有一部分答案并不绝对，说明你在不同对象面前会有不同版本。结果里最有价值的不是总分，而是那些让你迟疑的题。"
+      : "你的选择比较明确，说明你对自己的当前模式有稳定判断。接下来要小心的是过度相信“我就是这样”，因为稳定模式也可能稳定地制造同一种问题。";
+
+  return `
+    <h3>深层模式</h3>
+    <div class="deep-grid">
+      <p><strong>核心矛盾：</strong>${tensionLine}</p>
+      <p><strong>优势的锋利面：</strong>${topStrength.edge}</p>
+      <p><strong>压力下的样子：</strong>${topRisk.shadow}</p>
+      <p><strong>现实代价：</strong>${secondRisk.cost}</p>
+      <p><strong>关键追问：</strong>${topRisk.growthQuestion}</p>
+      <p><strong>答题信号：</strong>${pressureLine}</p>
+    </div>
+  `;
+}
+
 function renderBlindspot(item, mode) {
   if (mode === "context") {
     return renderContextBlindspot(item);
@@ -543,8 +608,11 @@ function renderBlindspot(item, mode) {
     <article class="detail-card">
       <h3>${item.name}</h3>
       <p><strong>${riskLabel}：</strong>${riskText}</p>
+      <p><strong>压力下的样子：</strong>${item.shadow}</p>
+      <p><strong>现实代价：</strong>${item.cost}</p>
       <p><strong>形成原因：</strong>${item.cause}</p>
       <p><strong>改进方法：</strong>${item.advice}</p>
+      <p><strong>关键追问：</strong>${item.growthQuestion}</p>
       <p><strong>本周练习：</strong>选择一个真实场景，只练习一个动作；完成后记录“我做了什么、效果如何、下次微调什么”。重点不是一次改变很多，而是让这个短板进入可练习状态。</p>
       <div class="tag-line">${item.practice.map((tag) => `<span>${tag}</span>`).join("")}</div>
     </article>
@@ -558,8 +626,11 @@ function renderContextBlindspot(item) {
     <article class="detail-card">
       <h3>${item.name}</h3>
       <p><strong>短板表现：</strong>${renderContextMiniText(item)}</p>
+      <p><strong>压力下的样子：</strong>${item.shadow}</p>
+      <p><strong>现实代价：</strong>${item.cost}</p>
       <p><strong>形成原因：</strong>${strongerContext.higher}${weakerContext.lower}</p>
       <p><strong>改进方法：</strong>把${strongerContext.shortName}里已经有效的做法，复制一个最小版本到${weakerContext.shortName}：只复制一个动作，不要求整套状态都一样。</p>
+      <p><strong>关键追问：</strong>${item.growthQuestion}</p>
       <p><strong>本周练习：</strong>找一个${weakerContext.shortName}里的真实场景，提前写下“我准备怎么回应/怎么开始/怎么设边界”，完成后复盘差异。如果没做到，也要写清楚卡在哪一步。</p>
       <div class="tag-line"><span>场景迁移</span><span>提前预案</span><span>小步复制</span></div>
     </article>
