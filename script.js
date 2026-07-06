@@ -8,6 +8,7 @@ const dimensions = {
     edge: "你不是没有情绪，而是比很多人更早发现情绪在改变方向。",
     shadow: "压力大时，“我没事”会先替你开口；真正的累，往往后来才从身体、语气或关系里漏出来。",
     cost: "别人可能以为你很好沟通，可那些没被照顾的压力，最后会绕一圈回来敲门。",
+    hardTruth: "说得更直一点：你越是装作没事，别人越容易错估你的边界；等你真的撑不住时，关系里的人反而会措手不及。",
     growthQuestion: "下一次你说“没事”之前，能不能先问自己：我是真的没事，还是暂时不想处理？",
     psychologist: "弗洛伊德的防御机制视角",
     psychAnalysis: "这类模式很像把情绪先压下去，或者用“我很理性、我能处理”来绕过真实感受。它短期能让你维持体面和功能，但长期会让情绪从别的地方漏出来，比如突然烦躁、冷淡、失眠，或对亲近的人没耐心。",
@@ -25,6 +26,7 @@ const dimensions = {
     edge: "你有机会把温和与清晰同时做到，不需要靠翻脸来证明边界。",
     shadow: "你会先吞下不舒服，直到某一刻忽然变冷、撤退，或用很重的方式说出来。",
     cost: "关系表面是稳的，可别人摸不到你的底线，你也会在一次次忍让里慢慢没电。",
+    hardTruth: "说得更直一点：你不说，别人就会默认可以；你越晚表达，最后说出来时越容易带着怨气。",
     growthQuestion: "下一次想答应别人之前，能不能先说：我需要想一下，再回复你。",
     psychologist: "罗杰斯的一致性视角",
     psychAnalysis: "罗杰斯会关注真实自我和外在表现是否一致。你嘴上说“没关系”，心里却觉得委屈或抗拒时，关系看似平稳，但内在已经开始分裂。长期下来，你会越来越不想表达，也越来越希望别人自动懂你。",
@@ -42,6 +44,7 @@ const dimensions = {
     edge: "你一旦动起来，反馈会很快变成燃料，事情也更容易被你推开。",
     shadow: "你不是没想法，只是“还没准备好”很容易披上“我再想想”的外衣。",
     cost: "机会会在反复酝酿里变旧。别人看到拖延，你心里背着的却是越来越重的石头。",
+    hardTruth: "说得更直一点：你不是没有能力，而是太常把事情拖到只能靠焦虑启动；久了以后，连小事都会变重。",
     growthQuestion: "下一件事能不能先做一个丑版本，允许它不完整，但必须真实存在？",
     psychologist: "班杜拉的自我效能视角",
     psychAnalysis: "班杜拉会说，行动力不只是意志力，也和“我相信自己能影响结果”的感觉有关。当你迟迟不开始，表面是拖延，底层可能是害怕一开始就证明自己不行。越不行动，自我效能越低；越小步完成，信心越会回来。",
@@ -59,6 +62,7 @@ const dimensions = {
     edge: "你有能力更新自己，而不是永远困在第一次判断里。",
     shadow: "你表面在听，心里已经开始排兵布阵；越是被说中，越想先守住自己。",
     cost: "你会错过真正有价值的提醒，也容易让别人觉得和你讨论问题很累。",
+    hardTruth: "说得更直一点：当你急着证明自己没错时，别人给你的提醒会先被你挡掉，关系里的真实反馈也会越来越少。",
     growthQuestion: "下一次想反驳时，能不能先问：你这样判断的依据是什么？",
     psychologist: "贝克的认知疗法视角",
     psychAnalysis: "贝克会关注你的自动化想法：别人提出不同意见时，你脑子里可能很快跳出“他在否定我”“他不懂”“我必须证明我没错”。真正卡住你的不一定是意见本身，而是你对意见的第一反应。",
@@ -76,6 +80,7 @@ const dimensions = {
     edge: "你能在混乱里把事情重新捡起来，这种回弹力很珍贵，但它不应该靠你一个人硬撑来维持。",
     shadow: "你表面在处理问题，心里却已经开始审自己：是不是我不够好、我不够细、我又让人失望了。",
     cost: "别人会习惯你兜底，而你会越来越难说累。最伤人的不是失误本身，是你把失误听成了对整个人的否定。",
+    hardTruth: "说得更直一点：你越习惯一个人扛，别人越难意识到你也需要支持；你也会越来越分不清负责和自我消耗。",
     growthQuestion: "下一次出问题时，能不能先问：这是一个具体事件，还是我又把它上升成了对自己的判决？",
     psychologist: "阿德勒的补偿视角",
     psychAnalysis: "阿德勒会留意一个人如何处理“不够好”的感觉。你可能用负责、可靠、能扛来抵消内在的不安，这确实让你变强，但也让你很容易把失败个人化。真正困住你的不是责任感，而是你把责任感变成了自我惩罚。",
@@ -390,7 +395,7 @@ function buildResultSummary(strengths, risks, meta) {
   const paragraphs = [
     strengthLead,
     `${riskLead}${topRisk.empathy}`,
-    `那些“我明明知道，但就是会这样”的地方，其实已经露出线索了。${secondRisk.cost}`,
+    `${topRisk.hardTruth}那些“我明明知道，但就是会这样”的地方，其实已经露出线索了。${secondRisk.cost}`,
     `${balanceLead}${responseNote}可以先从一个很小的动作开始：${topRisk.microSteps[0]}。`
   ].filter(Boolean);
 
@@ -463,8 +468,8 @@ function renderMiniStrength(item, mode) {
 
 function renderMiniRisk(item, mode) {
   const text = mode === "blindspot"
-      ? `容易中招的地方：${item.risk}${item.empathy}先不用责备自己，抓一个最常出现的场景练就好。`
-      : `值得留意的地方：${item.risk}${item.empathy}它未必天天出现，但一出现，就会牵动你的表达、行动或关系。`;
+      ? `容易中招的地方：${item.risk}${item.hardTruth}${item.empathy}先不用责备自己，抓一个最常出现的场景练就好。`
+      : `值得留意的地方：${item.risk}${item.hardTruth}${item.empathy}它未必天天出现，但一出现，就会牵动你的表达、行动或关系。`;
   return `<p class="mini-item"><strong>${item.name}</strong>${text}</p>`;
 }
 
@@ -570,6 +575,7 @@ function renderBlindspot(item, mode) {
     <article class="detail-card">
       <h3>${item.name}</h3>
       <p><strong>${riskLabel}：</strong>${riskText}</p>
+      <p><strong>说得更直一点：</strong>${item.hardTruth.replace(/^说得更直一点：/, "")}</p>
       <p><strong>先别急着怪自己：</strong>${item.empathy}</p>
       <p><strong>压力下的样子：</strong>${item.shadow}</p>
       <p><strong>现实代价：</strong>${item.cost}</p>
