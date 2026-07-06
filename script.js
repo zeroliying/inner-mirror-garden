@@ -136,6 +136,7 @@ const hesitationToggle = document.querySelector("#hesitation-toggle");
 const prevButton = document.querySelector("#prev-button");
 const nextButton = document.querySelector("#next-button");
 const resultTitle = document.querySelector("#result-title");
+const resultKeywords = document.querySelector("#result-keywords");
 const resultSummary = document.querySelector("#result-summary");
 const shareTitle = document.querySelector("#share-title");
 const shareCopy = document.querySelector("#share-copy");
@@ -281,6 +282,7 @@ function showResults() {
   });
   currentSharePayload = {
     title,
+    keywords: getResultKeywords(title),
     strengths,
     risks,
     riskMode,
@@ -288,6 +290,7 @@ function showResults() {
   };
 
   resultTitle.textContent = title;
+  resultKeywords.innerHTML = getResultKeywords(title).map((keyword) => `<span>${keyword}</span>`).join("");
   strengthHeading.textContent = strengthMode === "strong" ? "主要优势" : "相对优势";
   riskHeading.textContent = riskMode === "blindspot" ? "明显盲区" : "相对观察点";
   resultSummary.textContent = buildResultSummary(strengths, risks, {
@@ -334,9 +337,6 @@ function buildResultTitle(topStrength, topRisk, meta) {
   if (meta.averageScore >= 84 && topRisk.score >= 64) {
     return "太阳充电的木棉花";
   }
-  if (meta.averageScore <= 46) {
-    return "地下攒劲的小竹笋";
-  }
   if (meta.responseInfo.level === "veryHigh") {
     return "雾里校准的银莲花";
   }
@@ -356,9 +356,9 @@ function buildResultTitle(topStrength, topRisk, meta) {
     return "边界感开花山茶";
   }
   if (topStrength.key === "openness") {
-    return "随时长新枝的银杏";
+    return "雨后长枝的银杏";
   }
-  return "雨后回血的小苔藓";
+  return "雨后长枝的银杏";
 }
 
 function buildResultSummary(strengths, risks, meta) {
@@ -391,10 +391,11 @@ function buildResultSummary(strengths, risks, meta) {
 }
 
 function buildShareText(payload, hideWeakness = false) {
-  const { title, strengths, risks, riskMode, responseInfo } = payload;
+  const { title, keywords, strengths, risks, riskMode, responseInfo } = payload;
   const strengthNames = strengths.map((item) => item.name).join(" + ");
   const riskNames = risks.map((item) => item.name).join(" + ");
   const hook = getShareHook(title);
+  const keywordLine = keywords.length ? `关键词：${keywords.join(" / ")}。` : "";
   const riskLine = hideWeakness
     ? "我这次选择先隐藏成长观察点，只公开我的优势版本。"
     : riskMode === "blindspot"
@@ -406,7 +407,7 @@ function buildShareText(payload, hideWeakness = false) {
     ? "答题时我还挺犹豫，看来我是个需要结合具体事件理解的人。"
     : "";
 
-  return `我的性格测试结果是「${title}」：${hook}我的优势关键词是 ${strengthNames}。${riskLine}${hesitationLine} 这个测试还挺适合发给朋友互相对照。`;
+  return `我的性格测试结果是「${title}」：${hook}${keywordLine}我的优势关键词是 ${strengthNames}。${riskLine}${hesitationLine} 这个测试还挺适合发给朋友互相对照。`;
 }
 
 function renderShareCard() {
@@ -420,17 +421,29 @@ function renderShareCard() {
 function getShareHook(title) {
   const hooks = {
     "太阳充电的木棉花": "能量感比较稳，越往光亮的地方越能开花。",
-    "地下攒劲的小竹笋": "现在像是在土里蓄力，不是没生长，只是还没完全冒头。",
     "雾里校准的银莲花": "我不是没主见，只是在雾里反复校准自己真正的答案。",
     "人间安全绳榕树": "朋友可能会觉得我很能托底，但我也需要被托住。",
     "说动就动的春笋": "不一定等万事俱备，先破土再说。",
     "情绪天气预报芦苇": "风一变我大概先感觉到，敏感也是一种雷达。",
     "清醒雷达含羞草": "对自己的反应很敏锐，有时收起来也是在保护自己。",
     "边界感开花山茶": "温柔归温柔，边界也会开得很清楚。",
-    "随时长新枝的银杏": "愿意更新自己，脑子里总能长出新枝。",
-    "雨后回血的小苔藓": "不一定声势浩大，但恢复力很顽强。"
+    "雨后长枝的银杏": "不一定声势浩大，但总能慢慢恢复，也愿意长出新枝。"
   };
   return hooks[title] || "这个结果有点像我，越看越有内味。";
+}
+
+function getResultKeywords(title) {
+  const keywords = {
+    "太阳充电的木棉花": ["高能量", "外放", "稳定发光"],
+    "雾里校准的银莲花": ["敏感校准", "情境差异", "慢慢确认"],
+    "人间安全绳榕树": ["托底", "可靠", "需要被支持"],
+    "说动就动的春笋": ["启动快", "先行动", "用反馈修正"],
+    "情绪天气预报芦苇": ["敏锐", "先感知", "容易受环境影响"],
+    "清醒雷达含羞草": ["自我觉察", "保护性收起", "反应细腻"],
+    "边界感开花山茶": ["温和清晰", "边界感", "不靠翻脸表达"],
+    "雨后长枝的银杏": ["恢复力", "自我更新", "慢慢生长"]
+  };
+  return keywords[title] || [];
 }
 
 function renderMiniStrength(item, mode) {

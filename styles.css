@@ -296,6 +296,23 @@ h1 {
   line-height: 1.1;
 }
 
+.result-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.result-keywords span {
+  border: 1px solid rgba(111, 149, 130, 0.24);
+  border-radius: 999px;
+  background: #fbfcfb;
+  color: #405048;
+  padding: 6px 10px;
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
 .results-topline p:last-child {
   color: var(--muted);
 }
