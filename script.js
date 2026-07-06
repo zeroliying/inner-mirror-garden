@@ -143,8 +143,6 @@ const riskHeading = document.querySelector("#risk-heading");
 const riskList = document.querySelector("#risk-list");
 const responsePattern = document.querySelector("#response-pattern");
 const deepAnalysis = document.querySelector("#deep-analysis");
-const contextSummary = document.querySelector("#context-summary");
-const contextGrid = document.querySelector("#context-grid");
 const blindspotDetails = document.querySelector("#blindspot-details");
 const restartButton = document.querySelector("#restart-button");
 const editButton = document.querySelector("#edit-button");
@@ -222,26 +220,6 @@ function calculateScores(includePartial = false) {
   }, {});
 }
 
-function calculateContextScores() {
-  return Object.keys(dimensions).map((key) => {
-    const contextScores = Object.keys(contexts).reduce((acc, ctxKey) => {
-      const values = questions
-        .map((question, index) => (question.dim === key && question.ctx === ctxKey ? getScoredAnswer(question, answers[index]) : null))
-        .filter((value) => value !== null);
-      acc[ctxKey] = values.length ? (values.reduce((sum, value) => sum + value, 0) / values.length) * 20 : 0;
-      return acc;
-    }, {});
-
-    return {
-      ...dimensions[key],
-      key,
-      work: contextScores.work,
-      life: contextScores.life,
-      diff: contextScores.work - contextScores.life
-    };
-  });
-}
-
 function getScoredAnswer(question, answer) {
   if (answer === null) return null;
   return question.reverse ? 6 - answer : answer;
@@ -273,12 +251,7 @@ function calculateResponsePattern() {
 function showResults() {
   const scores = Object.values(calculateScores())
     .sort((a, b) => b.score - a.score);
-  const contextScores = calculateContextScores();
-  const contextDiffs = [...contextScores].sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff));
   const averageScore = average(scores.map((item) => item.score));
-  const scoreSpread = scores[0].score - scores[scores.length - 1].score;
-  const maxContextDiff = Math.abs(contextDiffs[0].diff);
-  const isContextSplit = scoreSpread < 8 && maxContextDiff >= 16;
   const highScores = scores.filter((item) => item.score >= 72);
   const strengths = highScores.length >= 2 ? highScores.slice(0, 2) : scores.slice(0, 2);
   const strengthMode = highScores.length >= 2 ? "strong" : "relative";
@@ -287,14 +260,13 @@ function showResults() {
     .sort((a, b) => a.score - b.score)
     .filter((item) => !strengthKeys.has(item.key));
   const lowScores = riskPool.filter((item) => item.score <= 62);
-  const risks = isContextSplit ? contextDiffs.slice(0, 2) : lowScores.length >= 2 ? lowScores.slice(0, 2) : riskPool.slice(0, 2);
-  const riskMode = isContextSplit ? "context" : lowScores.length >= 2 ? "blindspot" : "watch";
+  const risks = lowScores.length >= 2 ? lowScores.slice(0, 2) : riskPool.slice(0, 2);
+  const riskMode = lowScores.length >= 2 ? "blindspot" : "watch";
   const balancedCount = scores.filter((item) => item.score >= 64 && item.score <= 82).length;
   const responseInfo = calculateResponsePattern();
 
   const title = buildResultTitle(strengths[0], risks[0], {
     averageScore,
-    isContextSplit,
     responseInfo,
     riskMode
   });
@@ -308,13 +280,12 @@ function showResults() {
 
   resultTitle.textContent = title;
   strengthHeading.textContent = strengthMode === "strong" ? "主要优势" : "相对优势";
-  riskHeading.textContent = riskMode === "blindspot" ? "明显盲区" : riskMode === "context" ? "场景型观察点" : "相对观察点";
+  riskHeading.textContent = riskMode === "blindspot" ? "明显盲区" : "相对观察点";
   resultSummary.textContent = buildResultSummary(strengths, risks, {
     strengthMode,
     riskMode,
     balancedCount,
     averageScore,
-    contextScores,
     responseInfo
   });
   shareTitle.textContent = `我是「${title}」`;
@@ -340,12 +311,8 @@ function showResults() {
     risks,
     riskMode,
     responseInfo,
-    contextDiffs,
-    averageScore,
-    scoreSpread
+    averageScore
   });
-  contextSummary.innerHTML = renderContextSummary(contextScores);
-  contextGrid.innerHTML = contextDiffs.map(renderContextCard).join("");
   blindspotDetails.innerHTML = risks.map((item) => renderBlindspot(item, riskMode)).join("");
 
   quizPanel.classList.add("is-hidden");
@@ -354,9 +321,6 @@ function showResults() {
 }
 
 function buildResultTitle(topStrength, topRisk, meta) {
-  if (meta.isContextSplit) {
-    return "双栖切换的候鸟";
-  }
   if (meta.averageScore >= 84 && topRisk.score >= 64) {
     return "太阳充电的木棉花";
   }
@@ -391,18 +355,16 @@ function buildResultSummary(strengths, risks, meta) {
   const strengthNames = strengths.map((item) => item.name).join("、");
   const riskNames = risks.map((item) => item.name).join("、");
   const responseNote = meta.responseInfo.level === "high"
-    ? "另外，你在不少题目上出现犹豫或中间选择，这不是问题，反而说明你对自己的模式没有粗暴盖章。你可能不是“没特点”，而是会随对象、压力和场景切换不同版本。"
+    ? "另外，你在不少题目上出现犹豫或中间选择，这不是问题，反而说明你对自己的模式没有粗暴盖章。你可能不是“没特点”，而是会随对象、压力和具体情境切换不同版本。"
     : meta.responseInfo.level === "medium"
-      ? "有些题目你可能并不容易一眼判断，这很正常，也说明你的行为不是单一公式。建议结合具体场景看结果，尤其要看哪些关系、哪些压力会触发变化。"
+      ? "有些题目你可能并不容易一眼判断，这很正常，也说明你的行为不是单一公式。建议结合具体事件看结果，尤其要看哪些关系、哪些压力会触发变化。"
       : "";
   const strengthLead =
     meta.strengthMode === "strong"
       ? `你的突出资源是${strengthNames}，这不是普通的“表现好”，而是你已经形成的一套自我运转方式。`
       : `这次没有特别尖锐的高分项，但${strengthNames}仍然是相对更能托住你的部分，说明你不是没有资源，只是优势还不够外显。`;
   const riskLead =
-    meta.riskMode === "context"
-      ? `真正值得看的不是单一维度高低，而是${riskNames}在两个场景里的断层：你不是不会，而是没有稳定迁移。`
-      : meta.riskMode === "blindspot"
+    meta.riskMode === "blindspot"
       ? `需要优先留意的是${riskNames}，这些地方最容易在压力、亲密关系或被评价时露出真实惯性。但请先记住：看见短板不是失败，愿意诚实面对它已经很勇敢。`
       : `暂时没有明显低分项，${riskNames}更像相对弱点：平时不一定拖后腿，但在关键情境里会影响你的表达、行动或恢复速度。`;
   const balanceLead =
@@ -420,13 +382,11 @@ function buildShareText(payload, hideWeakness = false) {
   const hook = getShareHook(title);
   const riskLine = hideWeakness
     ? "我这次选择先隐藏成长观察点，只公开我的优势版本。"
-    : riskMode === "context"
-    ? `我的隐藏设定：不同场景会切换人格模式，尤其在 ${riskNames} 上很明显。`
     : riskMode === "blindspot"
       ? `我的成长副本：${riskNames}，看见短板但先不慌。`
       : `我的观察彩蛋：${riskNames}，不是短板，是值得继续观察的小线索。`;
   const hesitationLine = responseInfo.level === "high"
-    ? "答题时我还挺犹豫，看来我是个需要分场景理解的人。"
+    ? "答题时我还挺犹豫，看来我是个需要结合具体事件理解的人。"
     : "";
 
   return `我的性格测试结果是「${title}」：${hook}我的优势关键词是 ${strengthNames}。${riskLine}${hesitationLine} 这个测试还挺适合发给朋友互相对照。`;
@@ -442,7 +402,6 @@ function renderShareCard() {
 
 function getShareHook(title) {
   const hooks = {
-    "双栖切换的候鸟": "工作和生活像两个频道，我会根据场景切换飞行模式。",
     "太阳充电的木棉花": "能量感比较稳，越往光亮的地方越能开花。",
     "地下攒劲的小竹笋": "现在像是在土里蓄力，不是没生长，只是还没完全冒头。",
     "自带雷达的小蜗牛": "走得慢一点，但每一步都在认真探路。",
@@ -466,82 +425,10 @@ function renderMiniStrength(item, mode) {
 }
 
 function renderMiniRisk(item, mode) {
-  const text = mode === "context"
-    ? renderContextMiniText(item)
-    : mode === "blindspot"
+  const text = mode === "blindspot"
       ? `短板表现：${item.risk}建议先抓一个最常出现的场景练习，不要只停留在理解层面。`
       : `相对短板：${item.risk}虽然不是最低分，但它仍然可能在压力或关系里反复出现，需要持续观察和练习。`;
   return `<p class="mini-item"><strong>${item.name}</strong>${text}</p>`;
-}
-
-function renderContextMiniText(item) {
-  const strongerContext = item.diff >= 0 ? contexts.work : contexts.life;
-  const weakerContext = item.diff >= 0 ? contexts.life : contexts.work;
-  return `你在${strongerContext.shortName}能发挥，但在${weakerContext.shortName}不稳定，说明这项能力还没有真正迁移到所有场景。建议把高分场景里有效的做法拆成一个动作，复制到低分场景里练。`;
-}
-
-function renderContextSummary(items) {
-  const workAverage = average(items.map((item) => item.work));
-  const lifeAverage = average(items.map((item) => item.life));
-  const lead =
-    Math.abs(workAverage - lifeAverage) < 6
-      ? "两个场景整体接近，说明你的性格表现比较稳定。"
-      : workAverage > lifeAverage
-        ? "你在工作/学习场景里更容易进入状态，日常人际里可能更受情绪、关系或松散节奏影响。"
-        : "你在日常人际场景里更自然，工作/学习场景里可能更容易被评价、压力或规则感卡住。";
-
-  return `
-    <article class="context-overview">
-      <div>
-        <strong>${contexts.work.name}</strong>
-        <span>${Math.round(workAverage)}</span>
-      </div>
-      <div>
-        <strong>${contexts.life.name}</strong>
-        <span>${Math.round(lifeAverage)}</span>
-      </div>
-      <p>${lead}</p>
-    </article>
-  `;
-}
-
-function renderContextCard(item) {
-  const strongerContext = item.diff >= 0 ? contexts.work : contexts.life;
-  const weakerContext = item.diff >= 0 ? contexts.life : contexts.work;
-  const strongerScore = item.diff >= 0 ? item.work : item.life;
-  const weakerScore = item.diff >= 0 ? item.life : item.work;
-  const diff = Math.abs(item.diff);
-  const interpretation =
-    diff < 8
-      ? "两个场景表现接近，这项能力相对稳定。"
-      : `${strongerContext.shortName}更容易发挥；${weakerContext.shortName}里可能需要额外提醒自己。`;
-  const reason = diff < 8 ? item.strength : strongerContext.higher;
-
-  return `
-    <article class="context-card">
-      <div class="context-card-header">
-        <h3>${item.name}</h3>
-        <span>差值 ${Math.round(diff)}</span>
-      </div>
-      <div class="context-bars">
-        ${renderContextBar(contexts.work.shortName, item.work)}
-        ${renderContextBar(contexts.life.shortName, item.life)}
-      </div>
-      <p><strong>解读：</strong>${interpretation}</p>
-      <p><strong>提醒：</strong>${reason}</p>
-      ${diff >= 8 ? `<p><strong>补强：</strong>${weakerContext.lower}</p>` : ""}
-    </article>
-  `;
-}
-
-function renderContextBar(label, score) {
-  return `
-    <div class="context-bar-row">
-      <span>${label}</span>
-      <div class="score-bar" aria-hidden="true"><span style="width: ${score}%"></span></div>
-      <strong>${Math.round(score)}</strong>
-    </div>
-  `;
 }
 
 function average(values) {
@@ -552,10 +439,10 @@ function renderResponsePattern(info) {
   const headline = info.level === "high"
     ? "你这次的答案里有明显犹豫信号"
     : info.level === "medium"
-      ? "你这次有一些需要分场景理解的题"
+      ? "你这次有一些需要结合具体事件理解的题"
       : "你这次的选择相对明确";
   const body = info.level === "high"
-    ? "这通常说明你的性格表现不是固定模式，而是会随对象、场景、压力强度变化。能意识到“我不确定”本身就是一种觉察，不需要急着把自己归类。看结果时，优先看“场景”页，而不是只看总分。"
+    ? "这通常说明你的性格表现不是固定模式，而是会随对象、关系和压力强度变化。能意识到“我不确定”本身就是一种觉察，不需要急着把自己归类。看结果时，优先看“深层模式”和“剖析与建议”，而不是只看总分。"
     : info.level === "medium"
       ? "有些题可能对你来说不是绝对像或不像。这个犹豫值得被保留，结果可以作为观察入口，后续更适合结合具体事件复盘。"
       : "这说明你对多数题目的自我判断比较清楚，结果可以更直接地作为当前倾向参考；如果看到不舒服的地方，也先把它当成信息，不急着否定自己。";
@@ -576,13 +463,7 @@ function renderDeepAnalysis(meta) {
   const topStrength = meta.strengths[0];
   const topRisk = meta.risks[0];
   const secondRisk = meta.risks[1] || meta.risks[0];
-  const strongestSplit = meta.contextDiffs[0];
-  const contextLine = Math.abs(strongestSplit.diff) >= 8
-    ? renderContextMiniText(strongestSplit)
-    : "你的两个场景差异不算大，说明问题不太像“换个场合就变一个人”，更像某些固定压力触发了固定反应。";
-  const tensionLine = meta.riskMode === "context"
-    ? `你的核心矛盾不是能力缺失，而是场景切换：${contextLine}`
-    : `你的核心矛盾是：你有${topStrength.name}这类资源，但${topRisk.name}会在关键时刻拖住你。换句话说，你不是没有能力，而是某些旧反应会抢在能力前面启动。`;
+  const tensionLine = `你的核心矛盾是：你有${topStrength.name}这类资源，但${topRisk.name}会在关键时刻拖住你。换句话说，你不是没有能力，而是某些旧反应会抢在能力前面启动。`;
   const pressureLine = meta.responseInfo.level === "high"
     ? "答题里的犹豫说明你对自己并非毫无觉察，只是你的状态很依赖情境。你需要的不是一个固定标签，而是一张触发地图：谁、什么压力、哪类评价最容易让你变形。"
     : meta.responseInfo.level === "medium"
@@ -603,9 +484,6 @@ function renderDeepAnalysis(meta) {
 }
 
 function renderBlindspot(item, mode) {
-  if (mode === "context") {
-    return renderContextBlindspot(item);
-  }
   const riskLabel = mode === "blindspot" ? "短板表现" : "相对短板";
   const riskText = item.risk;
   return `
@@ -619,24 +497,6 @@ function renderBlindspot(item, mode) {
       <p><strong>关键追问：</strong>${item.growthQuestion}</p>
       <p><strong>本周练习：</strong>选择一个真实场景，只练习一个动作；完成后记录“我做了什么、效果如何、下次微调什么”。重点不是一次改变很多，而是让这个短板进入可练习状态。</p>
       <div class="tag-line">${item.practice.map((tag) => `<span>${tag}</span>`).join("")}</div>
-    </article>
-  `;
-}
-
-function renderContextBlindspot(item) {
-  const strongerContext = item.diff >= 0 ? contexts.work : contexts.life;
-  const weakerContext = item.diff >= 0 ? contexts.life : contexts.work;
-  return `
-    <article class="detail-card">
-      <h3>${item.name}</h3>
-      <p><strong>短板表现：</strong>${renderContextMiniText(item)}</p>
-      <p><strong>压力下的样子：</strong>${item.shadow}</p>
-      <p><strong>现实代价：</strong>${item.cost}</p>
-      <p><strong>形成原因：</strong>${strongerContext.higher}${weakerContext.lower}</p>
-      <p><strong>改进方法：</strong>把${strongerContext.shortName}里已经有效的做法，复制一个最小版本到${weakerContext.shortName}：只复制一个动作，不要求整套状态都一样。</p>
-      <p><strong>关键追问：</strong>${item.growthQuestion}</p>
-      <p><strong>本周练习：</strong>找一个${weakerContext.shortName}里的真实场景，提前写下“我准备怎么回应/怎么开始/怎么设边界”，完成后复盘差异。如果没做到，也要写清楚卡在哪一步。</p>
-      <div class="tag-line"><span>场景迁移</span><span>提前预案</span><span>小步复制</span></div>
     </article>
   `;
 }
