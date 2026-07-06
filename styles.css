@@ -254,8 +254,7 @@ h1 {
 }
 
 .primary-button,
-.ghost-button,
-.tab-button {
+.ghost-button {
   min-height: 42px;
   border-radius: 8px;
   cursor: pointer;
@@ -370,33 +369,12 @@ h1 {
   accent-color: var(--coral);
 }
 
-.result-tabs {
-  display: flex;
-  gap: 8px;
+.result-section {
   margin-bottom: 22px;
-  border-bottom: 1px solid var(--line);
 }
 
-.tab-button {
-  border: 0;
-  border-bottom: 3px solid transparent;
-  border-radius: 0;
-  background: transparent;
-  color: var(--muted);
-  padding: 0 12px 10px;
-}
-
-.tab-button.is-active {
-  border-bottom-color: var(--coral);
-  color: var(--ink);
-}
-
-.tab-page {
-  display: none;
-}
-
-.tab-page.is-active {
-  display: block;
+.result-section:last-of-type {
+  margin-bottom: 0;
 }
 
 .score-grid {
@@ -777,16 +755,6 @@ h1 {
   .quiz-actions,
   .results-actions {
     justify-content: stretch;
-  }
-
-  .result-tabs {
-    overflow-x: auto;
-    padding-bottom: 2px;
-  }
-
-  .tab-button {
-    flex: 0 0 auto;
-    white-space: nowrap;
   }
 
   .share-privacy {

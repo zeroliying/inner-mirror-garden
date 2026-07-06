@@ -1,6 +1,6 @@
 const dimensions = {
   selfRegulation: {
-    name: "觉察与调节",
+    name: "情绪风向感",
     strength: "你能听见自己心里的风向变化，也愿意在反应之前，给自己留一点余地。",
     risk: "压力一上来，你容易先压住、硬扛或绕开；等事情过去，才发现情绪其实一直在后面推你。",
     cause: "你太习惯先稳住局面，或者太快进入解决模式。感受还没被安放，事情已经被你往前推了。",
@@ -18,7 +18,7 @@ const dimensions = {
     practice: ["情绪命名", "暂停再回应", "复盘触发点"]
   },
   boundaryExpression: {
-    name: "边界与表达",
+    name: "表达边界感",
     strength: "你有机会把话说清楚，也把关系留住；温和和边界，在你身上不是非此即彼。",
     risk: "你容易为了不让场面变冷，把真实想法先收起来，像把一封信塞回抽屉。",
     cause: "你把清晰表达和强硬划上等号，也担心拒绝或不同意见会伤害关系。",
@@ -161,7 +161,6 @@ const editButton = document.querySelector("#edit-button");
 let currentSharePayload = null;
 
 function init() {
-  bindTabs();
   if (loadSharedResult()) return;
   renderQuestion();
   renderProgress();
@@ -298,7 +297,7 @@ function showResults() {
   resultTitle.textContent = title;
   resultKeywords.innerHTML = getResultKeywords(title).map((keyword) => `<span>${keyword}</span>`).join("");
   strengthHeading.textContent = strengthMode === "strong" ? "主要优势" : "相对优势";
-  riskHeading.textContent = riskMode === "blindspot" ? "明显性格盲区" : "性格盲区";
+  riskHeading.textContent = "性格盲区";
   resultSummary.innerHTML = buildResultSummary(strengths, risks, {
     strengthMode,
     riskMode,
@@ -632,16 +631,6 @@ function renderBlindspot(item, mode) {
       <div class="tag-line">${item.practice.map((tag) => `<span>${tag}</span>`).join("")}</div>
     </article>
   `;
-}
-
-function bindTabs() {
-  document.querySelectorAll(".tab-button").forEach((button) => {
-    button.addEventListener("click", () => {
-      const target = button.dataset.tab;
-      document.querySelectorAll(".tab-button").forEach((item) => item.classList.toggle("is-active", item === button));
-      document.querySelectorAll(".tab-page").forEach((page) => page.classList.toggle("is-active", page.dataset.page === target));
-    });
-  });
 }
 
 scaleOptions.addEventListener("click", (event) => {

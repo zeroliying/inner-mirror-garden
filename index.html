@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>性格盲区探索</title>
-    <link rel="stylesheet" href="styles.css?v=21" />
+    <link rel="stylesheet" href="styles.css?v=22" />
   </head>
   <body>
     <main class="app-shell">
@@ -71,12 +71,7 @@
             <button class="ghost-button" type="button" id="copy-share-button">复制结果链接</button>
           </section>
 
-          <div class="result-tabs" role="tablist" aria-label="结果视图">
-            <button class="tab-button is-active" type="button" data-tab="overview">总览</button>
-            <button class="tab-button" type="button" data-tab="blindspots">剖析与建议</button>
-          </div>
-
-          <div class="tab-page is-active" data-page="overview">
+          <div class="result-section">
             <div class="score-grid" id="score-grid"></div>
             <div class="insight-grid">
               <article class="insight-card">
@@ -93,7 +88,7 @@
             <article class="consistency-card" id="consistency-blindspot"></article>
           </div>
 
-          <div class="tab-page" data-page="blindspots">
+          <div class="result-section">
             <div class="detail-list" id="blindspot-details"></div>
           </div>
 
@@ -105,6 +100,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=26"></script>
+    <script src="script.js?v=27"></script>
   </body>
 </html>
