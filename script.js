@@ -217,7 +217,9 @@ function calculateResponsePattern() {
   const changedRatio = changedCount / questions.length;
   let level = "clear";
 
-  if (hesitationRatio >= 0.3 || neutralRatio >= 0.4 || changedRatio >= 0.25) {
+  if (hesitationRatio >= 0.45 || neutralRatio >= 0.55 || changedRatio >= 0.4) {
+    level = "veryHigh";
+  } else if (hesitationRatio >= 0.3 || neutralRatio >= 0.4 || changedRatio >= 0.25) {
     level = "high";
   } else if (hesitationRatio >= 0.15 || neutralRatio >= 0.25 || changedRatio >= 0.15) {
     level = "medium";
@@ -326,8 +328,8 @@ function buildResultTitle(topStrength, topRisk, meta) {
   if (meta.averageScore <= 46) {
     return "地下攒劲的小竹笋";
   }
-  if (meta.responseInfo.level === "high") {
-    return "自带雷达的小蜗牛";
+  if (meta.responseInfo.level === "veryHigh") {
+    return "雾里校准的银莲花";
   }
   if (topStrength.key === "responsibilityResilience" && topStrength.score >= 72) {
     return "人间安全绳榕树";
@@ -353,8 +355,10 @@ function buildResultTitle(topStrength, topRisk, meta) {
 function buildResultSummary(strengths, risks, meta) {
   const strengthNames = strengths.map((item) => item.name).join("、");
   const riskNames = risks.map((item) => item.name).join("、");
-  const responseNote = meta.responseInfo.level === "high"
-    ? "另外，你在不少题目上出现犹豫或中间选择，这不是问题，反而说明你对自己的模式没有粗暴盖章。你可能不是“没特点”，而是会随对象、压力和具体情境切换不同版本。"
+  const responseNote = meta.responseInfo.level === "veryHigh"
+    ? "另外，你在很多题目上出现犹豫、中间选择或改选，这不是问题，反而说明你对自己的模式没有粗暴盖章。你可能不是“没特点”，而是会随对象、压力和具体情境不断校准自己的答案。"
+    : meta.responseInfo.level === "high"
+    ? "另外，你在一些题目上出现犹豫或中间选择，这说明你没有粗暴地给自己贴标签。建议把这些迟疑当成观察入口，而不是当成没主见。"
     : meta.responseInfo.level === "medium"
       ? "有些题目你可能并不容易一眼判断，这很正常，也说明你的行为不是单一公式。建议结合具体事件看结果，尤其要看哪些关系、哪些压力会触发变化。"
       : "";
@@ -384,7 +388,9 @@ function buildShareText(payload, hideWeakness = false) {
     : riskMode === "blindspot"
       ? `我的盲区：${riskNames}，看见短板但先不慌。`
       : `我的观察彩蛋：${riskNames}，不是短板，是值得继续观察的小线索。`;
-  const hesitationLine = responseInfo.level === "high"
+  const hesitationLine = responseInfo.level === "veryHigh"
+    ? "答题时我非常犹豫，看来我是个需要慢慢校准答案的人。"
+    : responseInfo.level === "high"
     ? "答题时我还挺犹豫，看来我是个需要结合具体事件理解的人。"
     : "";
 
@@ -403,7 +409,7 @@ function getShareHook(title) {
   const hooks = {
     "太阳充电的木棉花": "能量感比较稳，越往光亮的地方越能开花。",
     "地下攒劲的小竹笋": "现在像是在土里蓄力，不是没生长，只是还没完全冒头。",
-    "自带雷达的小蜗牛": "走得慢一点，但每一步都在认真探路。",
+    "雾里校准的银莲花": "我不是没主见，只是在雾里反复校准自己真正的答案。",
     "人间安全绳榕树": "朋友可能会觉得我很能托底，但我也需要被托住。",
     "说动就动的春笋": "不一定等万事俱备，先破土再说。",
     "情绪天气预报芦苇": "风一变我大概先感觉到，敏感也是一种雷达。",
@@ -435,12 +441,16 @@ function average(values) {
 }
 
 function renderResponsePattern(info) {
-  const headline = info.level === "high"
+  const headline = info.level === "veryHigh"
+    ? "你这次的答案里有非常明显的犹豫信号"
+    : info.level === "high"
     ? "你这次的答案里有明显犹豫信号"
     : info.level === "medium"
       ? "你这次有一些需要结合具体事件理解的题"
       : "你这次的选择相对明确";
-  const body = info.level === "high"
+  const body = info.level === "veryHigh"
+    ? "你不是简单地没有主见，而是对很多题都能想到例外、对象和情境差异。这个信号会单独影响你的结果类型：只有当犹豫非常明显时，才会进入“雾里校准的银莲花”。看结果时，优先看“深层模式”和“剖析与建议”，不要只看总分。"
+    : info.level === "high"
     ? "这通常说明你的性格表现不是固定模式，而是会随对象、关系和压力强度变化。能意识到“我不确定”本身就是一种觉察，不需要急着把自己归类。看结果时，优先看“深层模式”和“剖析与建议”，而不是只看总分。"
     : info.level === "medium"
       ? "有些题可能对你来说不是绝对像或不像。这个犹豫值得被保留，结果可以作为观察入口，后续更适合结合具体事件复盘。"
@@ -463,7 +473,9 @@ function renderDeepAnalysis(meta) {
   const topRisk = meta.risks[0];
   const secondRisk = meta.risks[1] || meta.risks[0];
   const tensionLine = `你的核心矛盾是：你有${topStrength.name}这类资源，但${topRisk.name}会在关键时刻拖住你。换句话说，你不是没有能力，而是某些旧反应会抢在能力前面启动。`;
-  const pressureLine = meta.responseInfo.level === "high"
+  const pressureLine = meta.responseInfo.level === "veryHigh"
+    ? "答题里的大量犹豫说明你对自己并非毫无觉察，只是你的答案很依赖具体对象和情境。你需要的不是一个固定标签，而是一张触发地图：谁、什么压力、哪类评价最容易让你变形。"
+    : meta.responseInfo.level === "high"
     ? "答题里的犹豫说明你对自己并非毫无觉察，只是你的状态很依赖情境。你需要的不是一个固定标签，而是一张触发地图：谁、什么压力、哪类评价最容易让你变形。"
     : meta.responseInfo.level === "medium"
       ? "你有一部分答案并不绝对，说明你在不同对象面前会有不同版本。结果里最有价值的不是总分，而是那些让你迟疑的题。"
