@@ -76,21 +76,6 @@ const dimensions = {
   }
 };
 
-const contexts = {
-  work: {
-    name: "工作/学习场景",
-    shortName: "工作学习",
-    higher: "你在任务、目标和外部要求明确时更容易调动这项能力。",
-    lower: "这个能力在任务压力里更容易被压住，可能需要更明确的流程或边界来托住你。"
-  },
-  life: {
-    name: "日常生活与人际场景",
-    shortName: "日常人际",
-    higher: "你在关系、生活节奏和熟悉互动里更容易自然发挥这项能力。",
-    lower: "这个能力在亲近关系或松散生活里更容易松动，可能需要更具体的表达和自我照顾。"
-  }
-};
-
 const questions = [
   { ctx: "work", dim: "selfRegulation", reverse: true, text: "事情一乱，我会先假装冷静，把烦躁、委屈或慌张都压到后面再说。" },
   { ctx: "work", dim: "boundaryExpression", reverse: true, text: "别人临时加需求时，我嘴上说可以，心里其实已经开始不爽。" },
@@ -175,7 +160,7 @@ function renderAnswerStatus() {
 function renderQuestion() {
   const question = questions[currentIndex];
   questionNumber.textContent = `第 ${currentIndex + 1} 题`;
-  contextLabel.textContent = contexts[question.ctx].name;
+  contextLabel.textContent = "请按第一反应选择";
   questionText.textContent = question.text;
   scaleOptions.innerHTML = scaleLabels
     .map((label, index) => {
