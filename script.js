@@ -325,7 +325,8 @@ function showResults() {
     responseInfo,
     averageScore
   });
-  consistencyBlindspot.innerHTML = renderConsistencyBlindspot(consistencyInfo);
+  consistencyBlindspot.classList.toggle("is-hidden", consistencyInfo.level !== "high");
+  consistencyBlindspot.innerHTML = consistencyInfo.level === "high" ? renderConsistencyBlindspot(consistencyInfo) : "";
   blindspotDetails.innerHTML = risks.map((item) => renderBlindspot(item, riskMode)).join("");
 
   quizPanel.classList.add("is-hidden");
