@@ -72,7 +72,7 @@ const dimensions = {
     practice: ["先问后判", "寻找反例", "区分偏好与事实"]
   },
   responsibilityResilience: {
-    name: "可靠不内耗",
+    name: "承压与恢复",
     strength: "事情真的压下来时，你往往会想办法接住、补上、重新整理节奏。你有可靠的一面，也需要学会把自己从过度负责里松开。",
     risk: "你容易把“我来负责”过度延伸成“都怪我不够好”，事情一出问题，就先把自己放到审判席上。",
     cause: "你可能很早就习惯了靠靠谱、懂事、能扛来换安全感。所以一旦失控，就会本能地把问题拉回自己身上。",
@@ -122,8 +122,6 @@ const scaleLabels = [
   "非常像我"
 ];
 
-const publicTestUrl = "https://zeroliying.github.io/inner-mirror-garden/";
-
 let currentIndex = 0;
 const answers = Array(questions.length).fill(null);
 const hesitations = Array(questions.length).fill(false);
@@ -145,10 +143,6 @@ const nextButton = document.querySelector("#next-button");
 const resultTitle = document.querySelector("#result-title");
 const resultKeywords = document.querySelector("#result-keywords");
 const resultSummary = document.querySelector("#result-summary");
-const shareTitle = document.querySelector("#share-title");
-const shareCopy = document.querySelector("#share-copy");
-const hideWeaknessToggle = document.querySelector("#hide-weakness-toggle");
-const copyShareButton = document.querySelector("#copy-share-button");
 const scoreGrid = document.querySelector("#score-grid");
 const strengthHeading = document.querySelector("#strength-heading");
 const strengthList = document.querySelector("#strength-list");
@@ -160,10 +154,8 @@ const consistencyBlindspot = document.querySelector("#consistency-blindspot");
 const blindspotDetails = document.querySelector("#blindspot-details");
 const restartButton = document.querySelector("#restart-button");
 const editButton = document.querySelector("#edit-button");
-let currentSharePayload = null;
 
 function init() {
-  if (loadSharedResult()) return;
   renderQuestion();
   renderProgress();
 }
@@ -287,15 +279,6 @@ function showResults() {
     responseInfo,
     riskMode
   });
-  currentSharePayload = {
-    title,
-    keywords: getResultKeywords(title),
-    strengths,
-    risks,
-    riskMode,
-    responseInfo
-  };
-
   resultTitle.textContent = title;
   resultKeywords.innerHTML = getResultKeywords(title).map((keyword) => `<span>${keyword}</span>`).join("");
   strengthHeading.textContent = strengthMode === "strong" ? "主要优势" : "相对优势";
@@ -307,10 +290,6 @@ function showResults() {
     averageScore,
     responseInfo
   });
-  shareTitle.textContent = `我是「${title}」`;
-  copyShareButton.textContent = "复制结果链接";
-  renderShareCard();
-
   scoreGrid.innerHTML = scores
     .map((item) => {
       return `
@@ -402,88 +381,6 @@ function buildResultSummary(strengths, risks, meta) {
   ].filter(Boolean);
 
   return paragraphs.map((text) => `<p>${text}</p>`).join("");
-}
-
-function renderShareCard() {
-  if (!currentSharePayload) return;
-  const shareUrl = buildResultUrl(hideWeaknessToggle.checked);
-  const shareText = `${shareUrl}\n\n测试入口：${publicTestUrl}`;
-  shareCopy.textContent = shareText;
-  copyShareButton.dataset.shareText = shareText;
-  copyShareButton.textContent = "复制结果链接";
-}
-
-function buildResultUrl(hideWeakness = false) {
-  const url = new URL(publicTestUrl);
-  url.searchParams.set("result", encodeResultState(hideWeakness));
-  return url.toString();
-}
-
-function encodeResultState(hideWeakness = false) {
-  const payload = {
-    v: 1,
-    a: answers,
-    h: hesitations.map((item) => (item ? 1 : 0)),
-    c: answerChanges.map((count) => (count > 0 ? 1 : 0)),
-    hide: hideWeakness ? 1 : 0
-  };
-  return btoa(JSON.stringify(payload)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-}
-
-function decodeResultState(value) {
-  try {
-    const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
-    const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "=");
-    const payload = JSON.parse(atob(padded));
-    if (!Array.isArray(payload.a) || payload.a.length !== questions.length) return null;
-    if (!Array.isArray(payload.h) || payload.h.length !== questions.length) return null;
-    if (!Array.isArray(payload.c) || payload.c.length !== questions.length) return null;
-    return payload;
-  } catch {
-    return null;
-  }
-}
-
-function loadSharedResult() {
-  const url = new URL(window.location.href);
-  const hashParams = new URLSearchParams((window.location.hash || "").replace(/^#/, ""));
-  const encodedResult = url.searchParams.get("result") || hashParams.get("result");
-  if (!encodedResult) return false;
-
-  const payload = decodeResultState(encodedResult);
-  if (!payload) return false;
-
-  payload.a.forEach((answer, index) => {
-    answers[index] = Number.isInteger(answer) && answer >= 1 && answer <= 5 ? answer : null;
-  });
-  payload.h.forEach((item, index) => {
-    hesitations[index] = item === 1;
-  });
-  payload.c.forEach((item, index) => {
-    answerChanges[index] = item === 1 ? 1 : 0;
-  });
-
-  if (answers.some((answer) => answer === null)) return false;
-
-  hideWeaknessToggle.checked = payload.hide === 1;
-  currentIndex = questions.length - 1;
-  renderProgress();
-  showResults();
-  return true;
-}
-
-function getShareHook(title) {
-  const hooks = {
-    "太阳充电的木棉花": "能量感比较稳，越往光亮的地方越能开花。",
-    "雾里校准的银莲花": "我不是没主见，只是在雾里反复校准自己真正的答案。",
-    "人间安全绳榕树": "朋友可能会觉得我很能托底，但我也需要被托住。",
-    "说动就动的春笋": "不一定等万事俱备，先破土再说。",
-    "情绪天气预报芦苇": "风一变我大概先感觉到，敏感也是一种雷达。",
-    "清醒雷达含羞草": "对自己的反应很敏锐，有时收起来也是在保护自己。",
-    "边界感开花山茶": "温柔归温柔，边界也会开得很清楚。",
-    "雨后长枝的银杏": "不一定声势浩大，但总能慢慢恢复，也愿意长出新枝。"
-  };
-  return hooks[title] || "这个结果有点像我，越看越有内味。";
 }
 
 function getResultKeywords(title) {
@@ -667,18 +564,6 @@ hesitationToggle.addEventListener("click", () => {
   renderQuestion();
   renderProgress();
 });
-
-copyShareButton.addEventListener("click", async () => {
-  const text = copyShareButton.dataset.shareText || "";
-  try {
-    await navigator.clipboard.writeText(text);
-    copyShareButton.textContent = "已复制";
-  } catch {
-    copyShareButton.textContent = "复制失败，请手动选择";
-  }
-});
-
-hideWeaknessToggle.addEventListener("change", renderShareCard);
 
 prevButton.addEventListener("click", () => {
   currentIndex = Math.max(0, currentIndex - 1);
