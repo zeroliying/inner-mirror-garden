@@ -122,6 +122,8 @@ const scaleLabels = [
   "非常像我"
 ];
 
+const publicTestUrl = "https://zeroliying.github.io/inner-mirror-garden/";
+
 let currentIndex = 0;
 const answers = Array(questions.length).fill(null);
 const hesitations = Array(questions.length).fill(false);
@@ -405,15 +407,15 @@ function buildResultSummary(strengths, risks, meta) {
 function renderShareCard() {
   if (!currentSharePayload) return;
   const shareUrl = buildResultUrl(hideWeaknessToggle.checked);
-  const shareText = `${shareUrl}\n\n测试入口：https://zeroliying.github.io/inner-mirror-garden/`;
+  const shareText = `${shareUrl}\n\n测试入口：${publicTestUrl}`;
   shareCopy.textContent = shareText;
   copyShareButton.dataset.shareText = shareText;
   copyShareButton.textContent = "复制结果链接";
 }
 
 function buildResultUrl(hideWeakness = false) {
-  const url = new URL(window.location.href);
-  url.hash = `result=${encodeResultState(hideWeakness)}`;
+  const url = new URL(publicTestUrl);
+  url.searchParams.set("result", encodeResultState(hideWeakness));
   return url.toString();
 }
 
@@ -443,8 +445,9 @@ function decodeResultState(value) {
 }
 
 function loadSharedResult() {
-  const params = new URLSearchParams((window.location.hash || "").replace(/^#/, ""));
-  const encodedResult = params.get("result");
+  const url = new URL(window.location.href);
+  const hashParams = new URLSearchParams((window.location.hash || "").replace(/^#/, ""));
+  const encodedResult = url.searchParams.get("result") || hashParams.get("result");
   if (!encodedResult) return false;
 
   const payload = decodeResultState(encodedResult);
