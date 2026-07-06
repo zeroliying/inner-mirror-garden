@@ -116,7 +116,6 @@ const answerChanges = Array(questions.length).fill(0);
 const progressCount = document.querySelector("#progress-count");
 const progressLabel = document.querySelector("#progress-label");
 const progressBar = document.querySelector("#progress-bar");
-const answerStatus = document.querySelector("#answer-status");
 const quizPanel = document.querySelector("#quiz-panel");
 const resultsPanel = document.querySelector("#results-panel");
 const questionNumber = document.querySelector("#question-number");
@@ -145,16 +144,9 @@ const editButton = document.querySelector("#edit-button");
 let currentSharePayload = null;
 
 function init() {
-  renderAnswerStatus();
   renderQuestion();
   renderProgress();
   bindTabs();
-}
-
-function renderAnswerStatus() {
-  answerStatus.innerHTML = questions
-    .map((_, index) => `<span class="answer-dot" data-answer-dot="${index + 1}" aria-label="第 ${index + 1} 题未完成"></span>`)
-    .join("");
 }
 
 function renderQuestion() {
@@ -190,12 +182,6 @@ function renderProgress() {
   progressLabel.textContent = percent === 100 ? "已完成" : percent > 0 ? `${percent}%` : "尚未开始";
   progressBar.style.width = `${percent}%`;
 
-  answers.forEach((answer, index) => {
-    const dot = document.querySelector(`[data-answer-dot="${index + 1}"]`);
-    dot.classList.toggle("is-done", answer !== null);
-    dot.classList.toggle("is-hesitant", hesitations[index]);
-    dot.setAttribute("aria-label", `第 ${index + 1} 题${answer !== null ? "已完成" : "未完成"}`);
-  });
 }
 
 function calculateScores(includePartial = false) {
