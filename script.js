@@ -217,7 +217,7 @@ function calculateResponsePattern() {
   const changedRatio = changedCount / questions.length;
   let level = "clear";
 
-  if (hesitationRatio >= 0.45 || neutralRatio >= 0.55 || changedRatio >= 0.4) {
+  if (hesitationRatio >= 0.55 || neutralRatio >= 0.65 || changedRatio >= 0.5) {
     level = "veryHigh";
   } else if (hesitationRatio >= 0.3 || neutralRatio >= 0.4 || changedRatio >= 0.25) {
     level = "high";
