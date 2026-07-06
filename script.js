@@ -455,6 +455,7 @@ function calculateResponsePattern() {
   };
 }
 
+function showResults() {
   const scores = Object.values(calculateScores())
     .sort((a, b) => b.score - a.score);
   const averageScore = average(scores.map((item) => item.score));
