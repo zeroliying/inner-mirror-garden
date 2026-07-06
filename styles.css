@@ -674,12 +674,25 @@ h1 {
   .quiz-panel,
   .results-panel {
     min-height: auto;
-    padding: 20px;
+    padding: 18px;
   }
 
   .question-meta {
     flex-wrap: wrap;
     gap: 6px 12px;
+    margin-bottom: 12px;
+  }
+
+  #question-text {
+    min-height: auto;
+    margin-bottom: 18px;
+    font-size: 1.35rem;
+    line-height: 1.32;
+  }
+
+  .scale {
+    gap: 8px;
+    margin-bottom: 10px;
   }
 
   .scale,
@@ -695,11 +708,26 @@ h1 {
   }
 
   .scale-option {
-    min-height: 72px;
-    grid-template-columns: 48px minmax(0, 1fr);
+    min-height: 56px;
+    grid-template-columns: 38px minmax(0, 1fr);
     align-content: center;
     align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
     text-align: left;
+  }
+
+  .scale-option span:first-child {
+    font-size: 1.25rem;
+  }
+
+  .scale-option span:last-child {
+    font-size: 0.82rem;
+  }
+
+  .hesitation-toggle {
+    width: 100%;
+    margin-bottom: 20px;
   }
 
   .quiz-actions,
