@@ -313,8 +313,19 @@ h1 {
   font-weight: 900;
 }
 
-.results-topline p:last-child {
+.result-summary {
   color: var(--muted);
+}
+
+.result-summary p {
+  max-width: 820px;
+  margin: 0 0 10px;
+  line-height: 1.82;
+  text-wrap: pretty;
+}
+
+.result-summary p:last-child {
+  margin-bottom: 0;
 }
 
 .share-card {
