@@ -308,7 +308,7 @@ const dimensions = {
 };const questions = [
   { ctx: "work", dim: "selfRegulation", reverse: true, text: "事情一乱，我会先假装冷静，把烦躁、委屈或慌张都压到后面再说。" },
   { ctx: "work", dim: "boundaryExpression", reverse: true, text: "别人临时加需求时，我嘴上说可以，心里其实已经开始不爽。" },
-  { ctx: "work", dim: "action", reverse: true, text: "我常把"再查一点、再想清楚一点"当成暂时不用开始的缓冲区。" },
+  { ctx: "work", dim: "action", reverse: true, text: "我常把“再查一点、再想清楚一点”当成暂时不用开始的缓冲区。" },
   { ctx: "work", dim: "responsibilityResilience", reverse: true, text: "延期或没做好时，我会先给自己找理由，比较晚才具体复盘哪些地方能改。" },
   { ctx: "life", dim: "selfRegulation", reverse: true, text: "和亲近的人相处时，我容易把外面的压力带回家，却不明说自己怎么了。" },
   { ctx: "life", dim: "boundaryExpression", reverse: true, text: "我不想让关系变尴尬，所以会把一些不舒服先忍过去。" },
@@ -324,7 +324,7 @@ const dimensions = {
   { ctx: "life", dim: "selfRegulation", reverse: true, text: "我情绪上来时，会先顾着自己的感受，比较晚才意识到对方也被影响了。" },
   { ctx: "life", dim: "boundaryExpression", text: "我能直接说出不方便、不愿意或不舒服，而不是期待别人自己看出来。" },
   { ctx: "life", dim: "action", reverse: true, text: "计划被打乱后，我很容易觉得算了，干脆整天都不要管了。" },
-  { ctx: "life", dim: "openness", text: "我能分辨"我不喜欢这个说法"和"对方说得完全没道理"。" },
+  { ctx: "life", dim: "openness", text: "我能分辨“我不喜欢这个说法”和“对方说得完全没道理”。" },
   { ctx: "life", dim: "responsibilityResilience", reverse: true, text: "生活里出问题后，我会反复想自己哪里不够好，越想越难重新开始。" }
 ];
 
@@ -582,7 +582,7 @@ function buildResultSummary(strengths, risks, meta) {
   const paragraphs = [
     strengthLead,
     `${riskLead}${topRisk.empathy}`,
-    `${topRisk.hardTruth}那些"明明知道，却还是会这样"的时刻，并不是无解，它们只是比语言更早泄露了心里的惯性。${secondRisk.cost}`,
+    `${topRisk.hardTruth}那些“明明知道，却还是会这样”的时刻，并不是无解，它们只是比语言更早泄露了心里的惯性。${secondRisk.cost}`,
     `${balanceLead}${responseNote}不必一下子改变很多，可以先试着做一件很小的事：${topRisk.microSteps[0]}。`
   ].filter(Boolean);
 
@@ -634,7 +634,7 @@ function renderResponsePattern(info) {
   const body = info.level === "veryHigh"
     ? "这不是简单的没主见。你能看到例外、对象和情境差异，所以答案不会轻易落笔。这些迟疑像一张地图：谁、什么压力、哪类评价，会让你反复校准自己。"
     : info.level === "high"
-    ? "你不是固定的一种样子。对象、关系和压力一变，你的反应也会变。能说出"我不确定"，本身就是一种清醒。"
+    ? "你不是固定的一种样子。对象、关系和压力一变，你的反应也会变。能说出“我不确定”，本身就是一种清醒。"
     : info.level === "medium"
       ? "有些题不是绝对像或不像。这个犹豫可以保留，之后放回具体事件里看，会更准。"
       : "你对多数题目的判断比较清楚。即使看到不舒服的地方，也先把它当成信息，不急着否定自己。";
@@ -703,7 +703,7 @@ function renderBlindspot(item, mode) {
         <ol>${microSteps}</ol>
       </div>
       <p><strong>关键追问：</strong>${item.growthQuestion}</p>
-      <p><strong>本周练习：</strong>选择一个真实场景，只练习一个动作；完成后记录"我做了什么、效果如何、下次微调什么"。重点不是一次改变很多，而是让这个短板进入可练习状态。</p>
+      <p><strong>本周练习：</strong>选择一个真实场景，只练习一个动作；完成后记录“我做了什么、效果如何、下次微调什么”。重点不是一次改变很多，而是让这个短板进入可练习状态。</p>
       <div class="tag-line">${item.practice.map((tag) => `<span>${tag}</span>`).join("")}</div>
     </article>
   `;
