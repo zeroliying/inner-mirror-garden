@@ -80,19 +80,19 @@ const questions = [
   { ctx: "work", dim: "selfRegulation", reverse: true, text: "事情一乱，我会先假装冷静，把烦躁、委屈或慌张都压到后面再说。" },
   { ctx: "work", dim: "boundaryExpression", reverse: true, text: "别人临时加需求时，我嘴上说可以，心里其实已经开始不爽。" },
   { ctx: "work", dim: "action", reverse: true, text: "我常把“再查一点、再想清楚一点”当成暂时不用开始的缓冲区。" },
-  { ctx: "work", dim: "responsibilityResilience", reverse: true, text: "同样是延期或没做好，发生在别人身上我会觉得不专业，发生在自己身上我更容易觉得事出有因。" },
+  { ctx: "work", dim: "responsibilityResilience", reverse: true, text: "延期或没做好时，我会先给自己找理由，比较晚才具体复盘哪些地方能改。" },
   { ctx: "life", dim: "selfRegulation", reverse: true, text: "和亲近的人相处时，我容易把外面的压力带回家，却不明说自己怎么了。" },
   { ctx: "life", dim: "boundaryExpression", reverse: true, text: "我不想让关系变尴尬，所以会把一些不舒服先忍过去。" },
   { ctx: "life", dim: "action", text: "生活里想改变一件事时，我能先做一个很小但真实的动作，而不是只在脑子里重启人生。" },
   { ctx: "life", dim: "openness", reverse: true, text: "亲近的人指出我的问题时，我会先觉得被否定，之后才可能想他说得有没有道理。" },
-  { ctx: "life", dim: "boundaryExpression", reverse: true, text: "我希望别人尊重我的边界，但别人拒绝我时，我心里会觉得他是不是不够在乎我。" },
+  { ctx: "life", dim: "boundaryExpression", reverse: true, text: "别人拒绝我时，我能理解他有边界，但心里还是会有点失落或多想。" },
   { ctx: "life", dim: "responsibilityResilience", text: "关系出现摩擦时，我能承认自己的部分，但不会把全部问题都揽到自己身上。" },
   { ctx: "work", dim: "action", text: "即使版本很粗糙，我也能先交出一个可以被反馈的东西。" },
   { ctx: "work", dim: "openness", reverse: true, text: "当别人质疑我的判断时，我表面在听，心里已经在组织反驳。" },
-  { ctx: "work", dim: "openness", reverse: true, text: "我对别人的逻辑漏洞很敏感，但别人指出我的漏洞时，我会先觉得他太挑剔。" },
+  { ctx: "work", dim: "openness", reverse: true, text: "我很快能发现别人说法里的漏洞，但不太习惯主动寻找自己判断里的漏洞。" },
   { ctx: "work", dim: "responsibilityResilience", text: "被批评或指出问题后，我能提取可改的部分，而不是只记住受伤感。" },
   { ctx: "life", dim: "selfRegulation", text: "我能意识到自己什么时候是在逞强、讨好、回避或控制。" },
-  { ctx: "life", dim: "selfRegulation", reverse: true, text: "我会希望别人情绪稳定、别影响我，但自己情绪上来时，不一定看得见我也在影响别人。" },
+  { ctx: "life", dim: "selfRegulation", reverse: true, text: "我情绪上来时，会先顾着自己的感受，比较晚才意识到对方也被影响了。" },
   { ctx: "life", dim: "boundaryExpression", text: "我能直接说出不方便、不愿意或不舒服，而不是期待别人自己看出来。" },
   { ctx: "life", dim: "action", reverse: true, text: "计划被打乱后，我很容易觉得算了，干脆整天都不要管了。" },
   { ctx: "life", dim: "openness", text: "我能分辨“我不喜欢这个说法”和“对方说得完全没道理”。" },
@@ -344,7 +344,7 @@ function buildResultSummary(strengths, risks, meta) {
   const strengthLead =
     meta.strengthMode === "strong"
       ? `你的突出资源是${strengthNames}，这不是普通的“表现好”，而是你已经形成的一套自我运转方式。`
-      : `这次没有特别尖锐的高分项，但${strengthNames}仍然是相对更能托住你的部分，说明你不是没有资源，只是优势还不够外显。`;
+      : `你的结果中没有特别尖锐的高分项，${strengthNames}是相对更能托住你的部分；它们不一定外显，但已经在影响你的选择和关系。`;
   const riskLead =
     meta.riskMode === "blindspot"
       ? `需要优先留意的是${riskNames}，这些地方最容易在压力、亲密关系或被评价时露出真实惯性。但请先记住：看见短板不是失败，愿意诚实面对它已经很勇敢。`
@@ -365,7 +365,7 @@ function buildShareText(payload, hideWeakness = false) {
   const riskLine = hideWeakness
     ? "我这次选择先隐藏成长观察点，只公开我的优势版本。"
     : riskMode === "blindspot"
-      ? `我的成长副本：${riskNames}，看见短板但先不慌。`
+      ? `我的盲区：${riskNames}，看见短板但先不慌。`
       : `我的观察彩蛋：${riskNames}，不是短板，是值得继续观察的小线索。`;
   const hesitationLine = responseInfo.level === "high"
     ? "答题时我还挺犹豫，看来我是个需要结合具体事件理解的人。"
