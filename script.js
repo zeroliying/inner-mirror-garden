@@ -716,8 +716,16 @@ function renderBlindspot(item, mode) {
   }
   answers[currentIndex] = nextAnswer;
   hesitationAutoAnswers[currentIndex] = false;
-  renderQuestion();
   renderProgress();
+  if (currentIndex < questions.length - 1) {
+    setTimeout(() => {
+      currentIndex += 1;
+      renderQuestion();
+      renderProgress();
+    }, 350);
+  } else {
+    renderQuestion();
+  }
 });
 
 hesitationToggle.addEventListener("click", () => {
