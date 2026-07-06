@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>性格盲区探索</title>
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="intro-band" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="eyebrow">Self Insight Test</p>
+          <h1 id="page-title">性格盲区探索</h1>
+          <p class="lead">
+            回答 20 道情境题，分别观察你在工作学习、日常生活与人际交往中的优势、盲区和成长空间。
+          </p>
+          <div class="trust-row" aria-label="测试说明">
+            <span>约 5 分钟</span>
+            <span>非医学诊断</span>
+            <span>本地即时生成</span>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="assets/self-awareness-hero.png" alt="抽象的自我觉察插画：镜子、卡片与成长路径" />
+        </figure>
+      </section>
+
+      <section class="workspace" aria-label="性格测试">
+        <aside class="side-panel" aria-label="测试进度">
+          <div class="progress-header">
+            <span id="progress-count">0 / 20</span>
+            <strong id="progress-label">尚未开始</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <span id="progress-bar"></span>
+          </div>
+          <div class="answer-status" id="answer-status"></div>
+        </aside>
+
+        <section class="quiz-panel" id="quiz-panel" aria-live="polite">
+          <div class="question-meta">
+            <span id="question-number">第 1 题</span>
+            <span id="context-label">请选择最符合你的程度</span>
+          </div>
+          <h2 id="question-text"></h2>
+          <div class="scale" id="scale-options" role="radiogroup" aria-labelledby="question-text"></div>
+          <button class="hesitation-toggle" type="button" id="hesitation-toggle" aria-pressed="false">
+            这题我很犹豫 / 两边都像
+          </button>
+          <div class="quiz-actions">
+            <button class="ghost-button" type="button" id="prev-button">上一题</button>
+            <button class="primary-button" type="button" id="next-button">下一题</button>
+          </div>
+        </section>
+
+        <section class="results-panel is-hidden" id="results-panel" aria-live="polite">
+          <div class="results-topline">
+            <p class="eyebrow">Result</p>
+            <h2 id="result-title">你的性格画像</h2>
+            <p id="result-summary"></p>
+          </div>
+          <section class="share-card" aria-label="分享结果">
+            <p class="eyebrow">Share Card</p>
+            <h3 id="share-title"></h3>
+            <p id="share-copy"></p>
+            <label class="share-privacy">
+              <input type="checkbox" id="hide-weakness-toggle" />
+              <span>分享时隐藏我的短板/观察点</span>
+            </label>
+            <button class="ghost-button" type="button" id="copy-share-button">复制分享文案</button>
+          </section>
+
+          <div class="result-tabs" role="tablist" aria-label="结果视图">
+            <button class="tab-button is-active" type="button" data-tab="overview">总览</button>
+            <button class="tab-button" type="button" data-tab="contexts">场景</button>
+            <button class="tab-button" type="button" data-tab="blindspots">盲区与建议</button>
+          </div>
+
+          <div class="tab-page is-active" data-page="overview">
+            <div class="score-grid" id="score-grid"></div>
+            <div class="insight-grid">
+              <article class="insight-card">
+                <h3 id="strength-heading">主要优势</h3>
+                <div id="strength-list"></div>
+              </article>
+              <article class="insight-card">
+                <h3 id="risk-heading">潜在短板</h3>
+                <div id="risk-list"></div>
+              </article>
+            </div>
+            <article class="response-card" id="response-pattern"></article>
+          </div>
+
+          <div class="tab-page" data-page="contexts">
+            <div class="context-summary" id="context-summary"></div>
+            <div class="context-grid" id="context-grid"></div>
+          </div>
+
+          <div class="tab-page" data-page="blindspots">
+            <div class="detail-list" id="blindspot-details"></div>
+          </div>
+
+          <div class="results-actions">
+            <button class="ghost-button" type="button" id="edit-button">回到答题</button>
+            <button class="primary-button" type="button" id="restart-button">重新测试</button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js?v=2"></script>
+  </body>
+</html>
