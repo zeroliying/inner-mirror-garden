@@ -364,27 +364,30 @@ function buildResultTitle(topStrength, topRisk, meta) {
 function buildResultSummary(strengths, risks, meta) {
   const strengthNames = strengths.map((item) => item.name).join("、");
   const riskNames = risks.map((item) => item.name).join("、");
+  const topStrength = strengths[0];
+  const topRisk = risks[0];
+  const secondRisk = risks[1] || risks[0];
   const responseNote = meta.responseInfo.level === "veryHigh"
-    ? "另外，你在很多题目上出现犹豫或改选，这不是问题，反而说明你对自己的模式没有粗暴盖章。你可能不是“没特点”，而是会随对象、压力和具体情境不断校准自己的答案。"
+    ? "你在很多题目上出现犹豫或改选，这不是问题，反而说明你对自己的模式没有粗暴盖章；你可能不是“没特点”，而是对不同对象、压力和情境都很敏感。"
     : meta.responseInfo.level === "high"
-    ? "另外，你在一些题目上出现犹豫或改选，这说明你没有粗暴地给自己贴标签。建议把这些迟疑当成观察入口，而不是当成没主见。"
+    ? "你在一些题目上出现犹豫或改选，这说明你没有粗暴地给自己贴标签；这些迟疑可以当成观察入口，而不是当成没主见。"
     : meta.responseInfo.level === "medium"
-      ? "有些题目你可能并不容易一眼判断，这很正常，也说明你的行为不是单一公式。建议结合具体事件看结果，尤其要看哪些关系、哪些压力会触发变化。"
+      ? "有些题目你可能并不容易一眼判断，这很正常，也说明你的行为不是单一公式；请尤其留意哪些关系、哪些压力会触发变化。"
       : "";
   const strengthLead =
     meta.strengthMode === "strong"
-      ? `你的突出资源是${strengthNames}，这不是普通的“表现好”，而是你已经形成的一套自我运转方式。`
-      : `从你的选择看，${strengthNames}是更能托住你的部分。它们不一定特别外放，却会在你做选择、处理关系、撑过压力时悄悄发挥作用。`;
+      ? `你身上最有力量的部分是${strengthNames}。这不是“你应该做到”的客套话，而是你已经在用它们处理关系、压力和选择。${topStrength.edge}`
+      : `你不是那种把所有优势都摊在台面上的人，但${strengthNames}会在关键时刻露出来。它们可能不张扬，却会帮你稳住局面、做出选择，或者在混乱里先保住一点清醒。`;
   const riskLead =
     meta.riskMode === "blindspot"
-      ? `需要优先留意的是${riskNames}，这些地方最容易在压力、亲密关系或被评价时露出真实惯性。但请先记住：看见短板不是失败，愿意诚实面对它已经很勇敢；这不是给你扣分，而是把原来只能模糊难受的地方变得可以理解、可以练习。`
-      : `${riskNames}是更值得观察的两处小卡点：它们平时未必总拖后腿，但在压力、亲密关系或被评价时，可能会突然放大，影响你的表达、行动或恢复速度。`;
+      ? `真正容易让你卡住的，是${riskNames}。它们不是你“人不好”的证据，而是你在压力、亲密关系或被评价时会自动启动的保护方式：${topRisk.shadow}`
+      : `更值得观察的是${riskNames}。它们平时未必明显，但一到关键情境，可能会变成那种“我也不知道为什么又这样了”的小循环：${topRisk.shadow}`;
   const balanceLead =
     meta.balancedCount >= 4
-      ? "整体分布较均衡的人，短板往往不明显，但会以“小卡顿”的形式反复出现。你不需要一次改完整个人，只要从最影响现实关系和效率的一项开始，先练一个小动作。"
+      ? "你的模式不是单一标签，所以短板常常不是大问题，而是反复出现的小卡顿；不要急着改完整个人，先抓一个最常出现的场景就够了。"
       : "";
 
-  return `${strengthLead}${riskLead}这些不是定论，也不是给你下结论；它们只是帮你把一些平时容易忽略的模式照亮一点。${balanceLead}${responseNote}`;
+  return `如果把这份结果翻译成人话：${strengthLead}${riskLead}${topRisk.empathy}这份结果不是在给你判分，而是在帮你把那些“我明明知道，但就是会这样”的地方说清楚。${secondRisk.cost}${balanceLead}${responseNote}可以先从一个很小的动作开始：${topRisk.microSteps[0]}。`;
 }
 
 function buildShareText(payload, hideWeakness = false) {
@@ -433,15 +436,15 @@ function getShareHook(title) {
 function renderMiniStrength(item, mode) {
   const text =
     mode === "strong"
-      ? `这是你很珍贵的一部分。${item.strength}${item.edge}请不要把它当成“本来就该会”，它说明你已经积累了可依靠的内在资源。`
-      : `相对来看，这一项比其他部分更能支撑你。${item.strength}${item.edge}它可能不是特别张扬的优势，但已经在帮你稳住一些局面。`;
+      ? `这是你很珍贵的一部分。${item.strength}${item.edge}别把它当成“本来就该会”，它其实是你一路练出来的能力。`
+      : `这不是特别张扬的优势，但它会在关键时刻帮你撑住。${item.strength}${item.edge}它可能不像闪光点，更像你身上稳定供电的部分。`;
   return `<p class="mini-item"><strong>${item.name}</strong>${text}</p>`;
 }
 
 function renderMiniRisk(item, mode) {
   const text = mode === "blindspot"
-      ? `短板表现：${item.risk}${item.empathy}先不用急着责备自己，建议抓一个最常出现的场景练习，不要只停留在理解层面。`
-      : `相对短板：${item.risk}${item.empathy}虽然不是最低分，但它仍然可能在压力或关系里反复出现，可以用小练习慢慢调。`;
+      ? `你可能会中招的地方：${item.risk}${item.empathy}先不用急着责备自己，抓一个最常出现的场景练习就好。`
+      : `这个地方值得留意：${item.risk}${item.empathy}它不一定每天出现，但一出现就容易影响你的表达、行动或关系。`;
   return `<p class="mini-item"><strong>${item.name}</strong>${text}</p>`;
 }
 
@@ -481,7 +484,7 @@ function renderDeepAnalysis(meta) {
   const topStrength = meta.strengths[0];
   const topRisk = meta.risks[0];
   const secondRisk = meta.risks[1] || meta.risks[0];
-  const tensionLine = `你的核心矛盾是：你有${topStrength.name}这类资源，但${topRisk.name}会在关键时刻拖住你。换句话说，你不是没有能力，而是某些旧反应会抢在能力前面启动。`;
+  const tensionLine = `你真正卡住的地方，可能不是${topStrength.name}不够，而是${topRisk.name}在关键时刻先抢了方向盘。你不是没有能力，而是某些旧反应太熟练，会比理性更快启动。`;
   const practiceLine = topRisk.microSteps.map((step, index) => `${index + 1}. ${step}`).join("；");
   const pressureLine = meta.responseInfo.level === "veryHigh"
     ? "答题里的大量犹豫说明你对自己并非毫无觉察，只是你的答案很依赖具体对象和情境。你需要的不是一个固定标签，而是一张触发地图：谁、什么压力、哪类评价最容易让你变形。"
@@ -495,9 +498,9 @@ function renderDeepAnalysis(meta) {
     <h3>深层模式</h3>
     <div class="deep-grid">
       <p><strong>核心矛盾：</strong>${tensionLine}</p>
-      <p><strong>优势的锋利面：</strong>${topStrength.edge}</p>
-      <p><strong>压力下的样子：</strong>${topRisk.shadow}</p>
-      <p><strong>现实代价：</strong>${secondRisk.cost}</p>
+      <p><strong>别人未必看见的优势：</strong>${topStrength.edge}</p>
+      <p><strong>最容易露馅的瞬间：</strong>${topRisk.shadow}</p>
+      <p><strong>真正消耗你的地方：</strong>${secondRisk.cost}</p>
       <p><strong>心理学视角：</strong>${topRisk.psychologist}：${topRisk.psychAnalysis}</p>
       <p><strong>先被理解：</strong>${topRisk.empathy}</p>
       <p><strong>可以先这样做：</strong>${practiceLine}</p>
