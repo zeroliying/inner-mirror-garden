@@ -613,6 +613,32 @@ h1 {
   margin-bottom: 0;
 }
 
+.practice-box {
+  margin: 12px 0;
+  border: 1px solid rgba(111, 149, 130, 0.22);
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 12px 14px;
+  color: var(--muted);
+}
+
+.practice-box strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.practice-box ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.practice-box li {
+  padding-left: 2px;
+}
+
 .tag-line {
   display: flex;
   flex-wrap: wrap;

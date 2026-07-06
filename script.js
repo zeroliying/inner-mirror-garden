@@ -12,6 +12,8 @@ const dimensions = {
     psychologist: "弗洛伊德的防御机制视角",
     psychAnalysis: "这类模式很像把情绪先压下去，或者用“我很理性、我能处理”来绕过真实感受。它短期能让你维持体面和功能，但长期会让情绪从别的地方漏出来，比如突然烦躁、冷淡、失眠，或对亲近的人没耐心。",
     psychPractice: "练习不是立刻表达全部情绪，而是先承认情绪存在：我现在有反应，但我可以晚一点再处理。",
+    empathy: "这不是你矫情，也不是你情绪管理很差。很多时候你只是太习惯先稳住场面，久了就忘了自己也需要被安顿。",
+    microSteps: ["先在心里给情绪取名", "离开现场 3 分钟再回复", "睡前写下今天最明显的一个触发点"],
     practice: ["情绪命名", "暂停再回应", "复盘触发点"]
   },
   boundaryExpression: {
@@ -27,6 +29,8 @@ const dimensions = {
     psychologist: "罗杰斯的一致性视角",
     psychAnalysis: "罗杰斯会关注真实自我和外在表现是否一致。你嘴上说“没关系”，心里却觉得委屈或抗拒时，关系看似平稳，但内在已经开始分裂。长期下来，你会越来越不想表达，也越来越希望别人自动懂你。",
     psychPractice: "把真实感受降级表达：不必一次说得很重，但要让对方知道这件事对你有影响。",
+    empathy: "你不是软弱，也不是没有边界。你可能只是太在意关系的温度，所以每次表达自己之前，都先替关系紧张了一下。",
+    microSteps: ["先用一句话说结论", "把拒绝改成可承受范围", "答应前先留一句“我想一下”"],
     practice: ["先说结论", "延迟答应", "具体请求"]
   },
   action: {
@@ -42,6 +46,8 @@ const dimensions = {
     psychologist: "班杜拉的自我效能视角",
     psychAnalysis: "班杜拉会说，行动力不只是意志力，也和“我相信自己能影响结果”的感觉有关。当你迟迟不开始，表面是拖延，底层可能是害怕一开始就证明自己不行。越不行动，自我效能越低；越小步完成，信心越会回来。",
     psychPractice: "不要等信心来了再行动，先用一个小完成感制造信心。",
+    empathy: "拖延不代表你不上进。更多时候，是事情在脑子里被放得太大，你还没开始就已经先替自己承受了一遍失败。",
+    microSteps: ["把任务切到 15 分钟", "先做一个丑版本", "只找一个人要反馈"],
     practice: ["最小行动", "限定准备时间", "先反馈后优化"]
   },
   openness: {
@@ -57,6 +63,8 @@ const dimensions = {
     psychologist: "贝克的认知疗法视角",
     psychAnalysis: "贝克会关注你的自动化想法：别人提出不同意见时，你脑子里可能很快跳出“他在否定我”“他不懂”“我必须证明我没错”。真正卡住你的不一定是意见本身，而是你对意见的第一反应。",
     psychPractice: "把第一反应写成一句话，再问自己：这是事实，还是我对事实的解释？",
+    empathy: "你不是听不进意见。很多时候，是被质疑的那一秒太像“我不够好”，所以大脑先启动了保护模式。",
+    microSteps: ["先复述对方观点", "问一个澄清问题", "把事实和解释分开写"],
     practice: ["先问后判", "寻找反例", "区分偏好与事实"]
   },
   responsibilityResilience: {
@@ -72,6 +80,8 @@ const dimensions = {
     psychologist: "阿德勒的补偿视角",
     psychAnalysis: "阿德勒会留意一个人如何处理“不够好”的感觉。你可能用负责、可靠、扛事来补偿内在的不安，这会让你变强，也会让你把失败看得过度个人化。问题不是你不该负责，而是你不能把所有结果都变成对自我价值的审判。",
     psychPractice: "复盘时先区分事情失败和自我失败：事情可以没做好，但这不等于你这个人不够好。",
+    empathy: "你不是活该这么累。你只是太早学会了“我多扛一点，事情就会好一点”，但人不能长期靠透支来证明可靠。",
+    microSteps: ["复盘时先写外部条件", "只认领自己能控制的部分", "提前告诉别人风险和需要的支持"],
     practice: ["拆分责任", "暴露风险", "把失败具体化"]
   }
 };
@@ -368,11 +378,11 @@ function buildResultSummary(strengths, risks, meta) {
       : `你的结果中没有特别尖锐的高分项，${strengthNames}是相对更能托住你的部分；它们不一定外显，但已经在影响你的选择和关系。`;
   const riskLead =
     meta.riskMode === "blindspot"
-      ? `需要优先留意的是${riskNames}，这些地方最容易在压力、亲密关系或被评价时露出真实惯性。但请先记住：看见短板不是失败，愿意诚实面对它已经很勇敢。`
+      ? `需要优先留意的是${riskNames}，这些地方最容易在压力、亲密关系或被评价时露出真实惯性。但请先记住：看见短板不是失败，愿意诚实面对它已经很勇敢；这不是给你扣分，而是把原来只能模糊难受的地方变得可以理解、可以练习。`
       : `暂时没有明显低分项，${riskNames}更像相对弱点：平时不一定拖后腿，但在关键情境里会影响你的表达、行动或恢复速度。`;
   const balanceLead =
     meta.balancedCount >= 4
-      ? "整体分布较均衡的人，短板往往不明显，但会以“小卡顿”的形式反复出现，建议从最影响现实关系和效率的一项开始调整。"
+      ? "整体分布较均衡的人，短板往往不明显，但会以“小卡顿”的形式反复出现。你不需要一次改完整个人，只要从最影响现实关系和效率的一项开始，先练一个小动作。"
       : "";
 
   return `${strengthLead}${riskLead}这些不是定论，也不是给你下结论；它们只是帮你把一些平时容易忽略的模式照亮一点。${balanceLead}${responseNote}`;
@@ -431,8 +441,8 @@ function renderMiniStrength(item, mode) {
 
 function renderMiniRisk(item, mode) {
   const text = mode === "blindspot"
-      ? `短板表现：${item.risk}建议先抓一个最常出现的场景练习，不要只停留在理解层面。`
-      : `相对短板：${item.risk}虽然不是最低分，但它仍然可能在压力或关系里反复出现，需要持续观察和练习。`;
+      ? `短板表现：${item.risk}${item.empathy}先不用急着责备自己，建议抓一个最常出现的场景练习，不要只停留在理解层面。`
+      : `相对短板：${item.risk}${item.empathy}虽然不是最低分，但它仍然可能在压力或关系里反复出现，可以用小练习慢慢调。`;
   return `<p class="mini-item"><strong>${item.name}</strong>${text}</p>`;
 }
 
@@ -473,6 +483,7 @@ function renderDeepAnalysis(meta) {
   const topRisk = meta.risks[0];
   const secondRisk = meta.risks[1] || meta.risks[0];
   const tensionLine = `你的核心矛盾是：你有${topStrength.name}这类资源，但${topRisk.name}会在关键时刻拖住你。换句话说，你不是没有能力，而是某些旧反应会抢在能力前面启动。`;
+  const practiceLine = topRisk.microSteps.map((step, index) => `${index + 1}. ${step}`).join("；");
   const pressureLine = meta.responseInfo.level === "veryHigh"
     ? "答题里的大量犹豫说明你对自己并非毫无觉察，只是你的答案很依赖具体对象和情境。你需要的不是一个固定标签，而是一张触发地图：谁、什么压力、哪类评价最容易让你变形。"
     : meta.responseInfo.level === "high"
@@ -489,6 +500,8 @@ function renderDeepAnalysis(meta) {
       <p><strong>压力下的样子：</strong>${topRisk.shadow}</p>
       <p><strong>现实代价：</strong>${secondRisk.cost}</p>
       <p><strong>心理学视角：</strong>${topRisk.psychologist}：${topRisk.psychAnalysis}</p>
+      <p><strong>先被理解：</strong>${topRisk.empathy}</p>
+      <p><strong>可以先这样做：</strong>${practiceLine}</p>
       <p><strong>关键追问：</strong>${topRisk.growthQuestion}</p>
       <p><strong>答题信号：</strong>${pressureLine}</p>
     </div>
@@ -530,16 +543,22 @@ function renderConsistencyBlindspot(info) {
 function renderBlindspot(item, mode) {
   const riskLabel = mode === "blindspot" ? "短板表现" : "相对短板";
   const riskText = item.risk;
+  const microSteps = item.microSteps.map((step) => `<li>${step}</li>`).join("");
   return `
     <article class="detail-card">
       <h3>${item.name}</h3>
       <p><strong>${riskLabel}：</strong>${riskText}</p>
+      <p><strong>先别急着怪自己：</strong>${item.empathy}</p>
       <p><strong>压力下的样子：</strong>${item.shadow}</p>
       <p><strong>现实代价：</strong>${item.cost}</p>
       <p><strong>心理学视角：</strong>${item.psychologist}：${item.psychAnalysis}</p>
       <p><strong>形成原因：</strong>${item.cause}</p>
       <p><strong>改进方法：</strong>${item.advice}</p>
       <p><strong>心理练习：</strong>${item.psychPractice}</p>
+      <div class="practice-box">
+        <strong>可执行的 3 个小动作：</strong>
+        <ol>${microSteps}</ol>
+      </div>
       <p><strong>关键追问：</strong>${item.growthQuestion}</p>
       <p><strong>本周练习：</strong>选择一个真实场景，只练习一个动作；完成后记录“我做了什么、效果如何、下次微调什么”。重点不是一次改变很多，而是让这个短板进入可练习状态。</p>
       <div class="tag-line">${item.practice.map((tag) => `<span>${tag}</span>`).join("")}</div>
