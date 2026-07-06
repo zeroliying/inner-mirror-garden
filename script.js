@@ -297,7 +297,7 @@ function showResults() {
   resultTitle.textContent = title;
   resultKeywords.innerHTML = getResultKeywords(title).map((keyword) => `<span>${keyword}</span>`).join("");
   strengthHeading.textContent = strengthMode === "strong" ? "主要优势" : "相对优势";
-  riskHeading.textContent = riskMode === "blindspot" ? "明显盲区" : "相对观察点";
+  riskHeading.textContent = riskMode === "blindspot" ? "明显性格盲区" : "性格盲区";
   resultSummary.innerHTML = buildResultSummary(strengths, risks, {
     strengthMode,
     riskMode,
@@ -409,10 +409,10 @@ function buildShareText(payload, hideWeakness = false) {
   const hook = getShareHook(title);
   const keywordLine = keywords.length ? `关键词：${keywords.join(" / ")}。` : "";
   const riskLine = hideWeakness
-    ? "我这次选择先隐藏成长观察点，只公开我的优势版本。"
+    ? "我这次选择先隐藏性格盲区，只公开我的优势版本。"
     : riskMode === "blindspot"
-      ? `我的盲区：${riskNames}，看见短板但先不慌。`
-      : `我的观察彩蛋：${riskNames}，不是短板，是值得继续观察的小线索。`;
+      ? `我的性格盲区：${riskNames}，看见短板但先不慌。`
+      : `我的性格盲区：${riskNames}，不是给自己扣分，是值得认真看的地方。`;
   const hesitationLine = responseInfo.level === "veryHigh"
     ? "答题时我非常犹豫，看来我是个需要慢慢校准答案的人。"
     : responseInfo.level === "high"
