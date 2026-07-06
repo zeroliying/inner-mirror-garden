@@ -68,21 +68,21 @@ const dimensions = {
     practice: ["先问后判", "寻找反例", "区分偏好与事实"]
   },
   responsibilityResilience: {
-    name: "责任与复原",
-    strength: "你重承诺，也能在挫折后重新组织节奏，而不是一直停在自责里。",
-    risk: "你容易把太多结果归因到自己身上，遇到挫折时压力和自我否定同时上升。",
-    cause: "你把“事情做好”和“我必须负责所有结果”绑得太紧，忽略了边界和外部条件。",
-    advice: "复盘时分三栏写：我的部分、别人的部分、环境条件；只为自己能控制的下一步负责。",
-    edge: "你能托住事，也能在混乱之后重新找回节奏。",
-    shadow: "你会把负责变成自我审判，好像只要结果不好，就说明你这个人不够好。",
-    cost: "你可能越来越可靠，也越来越累；别人习惯你兜底，你却很少把压力分出去。",
-    growthQuestion: "下一次复盘时，能不能明确写下：这件事有哪一部分不该由我负责？",
+    name: "可靠不内耗",
+    strength: "你不是只会喊口号的人，事情真的压下来时，你通常会想办法接住、补上、重新整理节奏；更难得的是，你也有机会学会不把所有事都绑到自己身上。",
+    risk: "你容易把“我来负责”过度延伸成“都怪我不够好”，事情一出问题，就先把自己放到审判席上。",
+    cause: "你可能很早就习惯了靠靠谱、懂事、能扛来获得安全感，所以一旦失控，就会本能地把问题拉回自己身上。",
+    advice: "复盘时先写三行：事实发生了什么、我能控制什么、我需要谁的支持；不要一上来就审判自己这个人。",
+    edge: "你能在混乱里把事情重新捡起来，这种回弹力很珍贵，但它不应该靠你一个人硬撑来维持。",
+    shadow: "你表面在解决问题，心里其实已经开始惩罚自己：是不是我不够好、我不够细、我又让人失望了。",
+    cost: "别人会越来越习惯你兜底，而你会越来越难开口说累；最危险的是，你会把一次失误理解成整个人都不值得被信任。",
+    growthQuestion: "下一次出问题时，能不能先问：这是一个具体事件，还是我又把它上升成了对自己的判决？",
     psychologist: "阿德勒的补偿视角",
-    psychAnalysis: "阿德勒会留意一个人如何处理“不够好”的感觉。你可能用负责、可靠、扛事来补偿内在的不安，这会让你变强，也会让你把失败看得过度个人化。问题不是你不该负责，而是你不能把所有结果都变成对自我价值的审判。",
-    psychPractice: "复盘时先区分事情失败和自我失败：事情可以没做好，但这不等于你这个人不够好。",
-    empathy: "你不是活该这么累。你只是太早学会了“我多扛一点，事情就会好一点”，但人不能长期靠透支来证明可靠。",
-    microSteps: ["复盘时先写外部条件", "只认领自己能控制的部分", "提前告诉别人风险和需要的支持"],
-    practice: ["拆分责任", "暴露风险", "把失败具体化"]
+    psychAnalysis: "阿德勒会留意一个人如何处理“不够好”的感觉。你可能用负责、可靠、能扛来抵消内在的不安，这确实让你变强，但也让你很容易把失败个人化。真正困住你的不是责任感，而是你把责任感变成了自我惩罚。",
+    psychPractice: "复盘时先区分事情失败和自我失败：事情没做好，只说明某个环节需要调整，不等于你这个人不够好。",
+    empathy: "你不是活该这么累。你只是太早学会了“我多扛一点，事情就会好一点”，但人不能长期靠透支来证明自己可靠。",
+    microSteps: ["先写事实，不写评价", "只认领自己能控制的部分", "把需要的支持说出来"],
+    practice: ["拆分责任", "请求支持", "把失败具体化"]
   }
 };
 
@@ -220,24 +220,23 @@ function getScoredAnswer(question, answer) {
 
 function calculateResponsePattern() {
   const hesitationCount = hesitations.filter(Boolean).length;
-  const neutralCount = answers.filter((answer) => answer === 3).length;
+  const lightAgreeCount = answers.filter((answer) => answer === 3).length;
   const changedCount = answerChanges.filter((count) => count > 0).length;
   const hesitationRatio = hesitationCount / questions.length;
-  const neutralRatio = neutralCount / questions.length;
   const changedRatio = changedCount / questions.length;
   let level = "clear";
 
-  if (hesitationRatio >= 0.55 || neutralRatio >= 0.65 || changedRatio >= 0.5) {
+  if (hesitationRatio >= 0.55 || changedRatio >= 0.5) {
     level = "veryHigh";
-  } else if (hesitationRatio >= 0.3 || neutralRatio >= 0.4 || changedRatio >= 0.25) {
+  } else if (hesitationRatio >= 0.3 || changedRatio >= 0.25) {
     level = "high";
-  } else if (hesitationRatio >= 0.15 || neutralRatio >= 0.25 || changedRatio >= 0.15) {
+  } else if (hesitationRatio >= 0.15 || changedRatio >= 0.15) {
     level = "medium";
   }
 
   return {
     hesitationCount,
-    neutralCount,
+    lightAgreeCount,
     changedCount,
     level
   };
@@ -366,20 +365,20 @@ function buildResultSummary(strengths, risks, meta) {
   const strengthNames = strengths.map((item) => item.name).join("、");
   const riskNames = risks.map((item) => item.name).join("、");
   const responseNote = meta.responseInfo.level === "veryHigh"
-    ? "另外，你在很多题目上出现犹豫、中间选择或改选，这不是问题，反而说明你对自己的模式没有粗暴盖章。你可能不是“没特点”，而是会随对象、压力和具体情境不断校准自己的答案。"
+    ? "另外，你在很多题目上出现犹豫或改选，这不是问题，反而说明你对自己的模式没有粗暴盖章。你可能不是“没特点”，而是会随对象、压力和具体情境不断校准自己的答案。"
     : meta.responseInfo.level === "high"
-    ? "另外，你在一些题目上出现犹豫或中间选择，这说明你没有粗暴地给自己贴标签。建议把这些迟疑当成观察入口，而不是当成没主见。"
+    ? "另外，你在一些题目上出现犹豫或改选，这说明你没有粗暴地给自己贴标签。建议把这些迟疑当成观察入口，而不是当成没主见。"
     : meta.responseInfo.level === "medium"
       ? "有些题目你可能并不容易一眼判断，这很正常，也说明你的行为不是单一公式。建议结合具体事件看结果，尤其要看哪些关系、哪些压力会触发变化。"
       : "";
   const strengthLead =
     meta.strengthMode === "strong"
       ? `你的突出资源是${strengthNames}，这不是普通的“表现好”，而是你已经形成的一套自我运转方式。`
-      : `你的结果中没有特别尖锐的高分项，${strengthNames}是相对更能托住你的部分；它们不一定外显，但已经在影响你的选择和关系。`;
+      : `从你的选择看，${strengthNames}是更能托住你的部分。它们不一定特别外放，却会在你做选择、处理关系、撑过压力时悄悄发挥作用。`;
   const riskLead =
     meta.riskMode === "blindspot"
       ? `需要优先留意的是${riskNames}，这些地方最容易在压力、亲密关系或被评价时露出真实惯性。但请先记住：看见短板不是失败，愿意诚实面对它已经很勇敢；这不是给你扣分，而是把原来只能模糊难受的地方变得可以理解、可以练习。`
-      : `暂时没有明显低分项，${riskNames}更像相对弱点：平时不一定拖后腿，但在关键情境里会影响你的表达、行动或恢复速度。`;
+      : `${riskNames}是更值得观察的两处小卡点：它们平时未必总拖后腿，但在压力、亲密关系或被评价时，可能会突然放大，影响你的表达、行动或恢复速度。`;
   const balanceLead =
     meta.balancedCount >= 4
       ? "整体分布较均衡的人，短板往往不明显，但会以“小卡顿”的形式反复出现。你不需要一次改完整个人，只要从最影响现实关系和效率的一项开始，先练一个小动作。"
@@ -472,7 +471,7 @@ function renderResponsePattern(info) {
     <p>${body}</p>
     <div class="response-stats">
       <span>标记犹豫 ${info.hesitationCount}</span>
-      <span>选择中间 ${info.neutralCount}</span>
+      <span>轻度肯定 ${info.lightAgreeCount}</span>
       <span>改选题目 ${info.changedCount}</span>
     </div>
   `;
