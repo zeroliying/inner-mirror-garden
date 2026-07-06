@@ -583,6 +583,11 @@ h1 {
   color: var(--ink);
 }
 
+.deep-grid p:has(strong:first-child),
+.detail-card p:has(strong:first-child) {
+  text-wrap: pretty;
+}
+
 .response-stats {
   display: flex;
   flex-wrap: wrap;

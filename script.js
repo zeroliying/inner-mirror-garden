@@ -9,6 +9,9 @@ const dimensions = {
     shadow: "压力大时，你会把“我没事”当成默认反应，直到身体、语气或关系替你暴露真实状态。",
     cost: "别人可能以为你很好沟通，但真正的压力被延迟处理，最后会用更重的方式反弹。",
     growthQuestion: "下一次你说“没事”之前，能不能先问自己：我是真的没事，还是暂时不想处理？",
+    psychologist: "弗洛伊德的防御机制视角",
+    psychAnalysis: "这类模式很像把情绪先压下去，或者用“我很理性、我能处理”来绕过真实感受。它短期能让你维持体面和功能，但长期会让情绪从别的地方漏出来，比如突然烦躁、冷淡、失眠，或对亲近的人没耐心。",
+    psychPractice: "练习不是立刻表达全部情绪，而是先承认情绪存在：我现在有反应，但我可以晚一点再处理。",
     practice: ["情绪命名", "暂停再回应", "复盘触发点"]
   },
   boundaryExpression: {
@@ -21,6 +24,9 @@ const dimensions = {
     shadow: "你会先吞下不舒服，等到忍不住时才突然变冷、撤退或爆发。",
     cost: "关系表面维持住了，但别人不知道你的真实底线，你也会越来越觉得自己被消耗。",
     growthQuestion: "下一次想答应别人之前，能不能先说：我需要想一下，再回复你。",
+    psychologist: "罗杰斯的一致性视角",
+    psychAnalysis: "罗杰斯会关注真实自我和外在表现是否一致。你嘴上说“没关系”，心里却觉得委屈或抗拒时，关系看似平稳，但内在已经开始分裂。长期下来，你会越来越不想表达，也越来越希望别人自动懂你。",
+    psychPractice: "把真实感受降级表达：不必一次说得很重，但要让对方知道这件事对你有影响。",
     practice: ["先说结论", "延迟答应", "具体请求"]
   },
   action: {
@@ -33,6 +39,9 @@ const dimensions = {
     shadow: "你不是没想法，而是容易把“还没准备好”包装成“我再想想”。",
     cost: "机会会在反复酝酿里变旧，别人看到的是拖延，你自己感受到的是越来越重的心理负担。",
     growthQuestion: "下一件事能不能先做一个丑版本，允许它不完整，但必须真实存在？",
+    psychologist: "班杜拉的自我效能视角",
+    psychAnalysis: "班杜拉会说，行动力不只是意志力，也和“我相信自己能影响结果”的感觉有关。当你迟迟不开始，表面是拖延，底层可能是害怕一开始就证明自己不行。越不行动，自我效能越低；越小步完成，信心越会回来。",
+    psychPractice: "不要等信心来了再行动，先用一个小完成感制造信心。",
     practice: ["最小行动", "限定准备时间", "先反馈后优化"]
   },
   openness: {
@@ -45,6 +54,9 @@ const dimensions = {
     shadow: "你表面在听，心里已经开始准备反驳材料，尤其当对方说中了你不想承认的部分。",
     cost: "你会错过真正有价值的提醒，也容易让别人觉得和你讨论问题很累。",
     growthQuestion: "下一次想反驳时，能不能先问：你这样判断的依据是什么？",
+    psychologist: "贝克的认知疗法视角",
+    psychAnalysis: "贝克会关注你的自动化想法：别人提出不同意见时，你脑子里可能很快跳出“他在否定我”“他不懂”“我必须证明我没错”。真正卡住你的不一定是意见本身，而是你对意见的第一反应。",
+    psychPractice: "把第一反应写成一句话，再问自己：这是事实，还是我对事实的解释？",
     practice: ["先问后判", "寻找反例", "区分偏好与事实"]
   },
   responsibilityResilience: {
@@ -57,6 +69,9 @@ const dimensions = {
     shadow: "你会把负责变成自我审判，好像只要结果不好，就说明你这个人不够好。",
     cost: "你可能越来越可靠，也越来越累；别人习惯你兜底，你却很少把压力分出去。",
     growthQuestion: "下一次复盘时，能不能明确写下：这件事有哪一部分不该由我负责？",
+    psychologist: "阿德勒的补偿视角",
+    psychAnalysis: "阿德勒会留意一个人如何处理“不够好”的感觉。你可能用负责、可靠、扛事来补偿内在的不安，这会让你变强，也会让你把失败看得过度个人化。问题不是你不该负责，而是你不能把所有结果都变成对自我价值的审判。",
+    psychPractice: "复盘时先区分事情失败和自我失败：事情可以没做好，但这不等于你这个人不够好。",
     practice: ["拆分责任", "暴露风险", "把失败具体化"]
   }
 };
@@ -473,6 +488,7 @@ function renderDeepAnalysis(meta) {
       <p><strong>优势的锋利面：</strong>${topStrength.edge}</p>
       <p><strong>压力下的样子：</strong>${topRisk.shadow}</p>
       <p><strong>现实代价：</strong>${secondRisk.cost}</p>
+      <p><strong>心理学视角：</strong>${topRisk.psychologist}：${topRisk.psychAnalysis}</p>
       <p><strong>关键追问：</strong>${topRisk.growthQuestion}</p>
       <p><strong>答题信号：</strong>${pressureLine}</p>
     </div>
@@ -488,8 +504,10 @@ function renderBlindspot(item, mode) {
       <p><strong>${riskLabel}：</strong>${riskText}</p>
       <p><strong>压力下的样子：</strong>${item.shadow}</p>
       <p><strong>现实代价：</strong>${item.cost}</p>
+      <p><strong>心理学视角：</strong>${item.psychologist}：${item.psychAnalysis}</p>
       <p><strong>形成原因：</strong>${item.cause}</p>
       <p><strong>改进方法：</strong>${item.advice}</p>
+      <p><strong>心理练习：</strong>${item.psychPractice}</p>
       <p><strong>关键追问：</strong>${item.growthQuestion}</p>
       <p><strong>本周练习：</strong>选择一个真实场景，只练习一个动作；完成后记录“我做了什么、效果如何、下次微调什么”。重点不是一次改变很多，而是让这个短板进入可练习状态。</p>
       <div class="tag-line">${item.practice.map((tag) => `<span>${tag}</span>`).join("")}</div>
