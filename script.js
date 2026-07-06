@@ -406,8 +406,9 @@ function buildResultSummary(strengths, risks, meta) {
 function renderShareCard() {
   if (!currentSharePayload) return;
   const shareUrl = buildResultUrl(hideWeaknessToggle.checked);
-  shareCopy.textContent = shareUrl;
-  copyShareButton.dataset.shareText = shareUrl;
+  const shareText = `${shareUrl}\n\n测试入口：https://zeroliying.github.io/inner-mirror-garden/`;
+  shareCopy.textContent = shareText;
+  copyShareButton.dataset.shareText = shareText;
   copyShareButton.textContent = "复制结果链接";
 }
 
