@@ -377,7 +377,7 @@ function buildResultSummary(strengths, risks, meta) {
   const strengthLead =
     meta.strengthMode === "strong"
       ? `你身上最有力量的部分是${strengthNames}。这不是“你应该做到”的客套话，而是你已经在用它们处理关系、压力和选择。${topStrength.edge}`
-      : `你不是那种把所有优势都摊在台面上的人，但${strengthNames}会在关键时刻露出来。它们可能不张扬，却会帮你稳住局面、做出选择，或者在混乱里先保住一点清醒。`;
+      : `${strengthNames}是你比较能依靠的部分。它们可能不张扬，却会帮你稳住局面、做出选择，或者在混乱里先保住一点清醒。`;
   const riskLead =
     meta.riskMode === "blindspot"
       ? `真正容易让你卡住的，是${riskNames}。它们不是你“人不好”的证据，而是你在压力、亲密关系或被评价时会自动启动的保护方式：${topRisk.shadow}`
