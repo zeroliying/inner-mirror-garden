@@ -579,6 +579,20 @@ h1 {
   margin-bottom: 0;
 }
 
+.heart-note,
+.psych-note {
+  border-left: 3px solid rgba(216, 111, 85, 0.55);
+  background: #fffaf7;
+  padding: 11px 13px;
+  color: #594740 !important;
+}
+
+.psych-note {
+  border-left-color: rgba(56, 90, 124, 0.45);
+  background: #f7fafc;
+  color: #405061 !important;
+}
+
 .detail-heading {
   display: flex;
   align-items: baseline;
