@@ -1,9 +1,109 @@
 function getScoreTier(score) {
-  if (score <= 52) return 'low';
-  if (score <= 68) return 'midLow';
-  if (score <= 84) return 'midHigh';
+  if (score <= 55) return "low";
+  if (score <= 69) return "midLow";
+  if (score <= 79) return "midHigh";
   return 'high';
 }
+
+const scoreBands = {
+  low: { label: "明显劣势", range: "55 分及以下" },
+  midLow: { label: "待提升", range: "60–69 分" },
+  midHigh: { label: "稳定区", range: "70–79 分" },
+  high: { label: "明显优势", range: "80 分及以上" }
+};
+
+const dimensionScoreCopy = {
+  selfRegulation: {
+    low: {
+      portrait: "压力一来，你常在情绪已经变成语气或动作后，才发现自己被影响了。",
+      nextStep: "先识别身体信号：肩颈紧、呼吸快或突然沉默时，暂停一分钟。"
+    },
+    midLow: {
+      portrait: "你通常能在事后说清感受，但当下仍容易先压住，等事情结束再慢慢消化。",
+      nextStep: "把“我没事”换成“我需要缓一下”，让觉察提前发生。"
+    },
+    midHigh: {
+      portrait: "你多数时候能看见情绪的方向，也能避免它直接伤到别人；高压时偶尔仍会硬撑。",
+      nextStep: "觉察后补一句原因：“我现在有点___，因为___。”"
+    },
+    high: {
+      portrait: "你很早就能捕捉情绪变化，并主动调节反应；需要留意别把感受处理得太快。",
+      nextStep: "偶尔允许自己只表达感受，不急着分析或解决。"
+    }
+  },
+  boundaryExpression: {
+    low: {
+      portrait: "你常先答应、后委屈，边界往往到快撑不住时才被别人看见。",
+      nextStep: "答应前固定说一句：“我确认一下，稍后回复你。”"
+    },
+    midLow: {
+      portrait: "你知道自己的底线，但为了维持气氛，仍会把一些“不愿意”说得很含糊。",
+      nextStep: "用“结论＋我能做到什么”表达，少让对方猜。"
+    },
+    midHigh: {
+      portrait: "你在大多数关系里能温和而清楚地表达边界，面对权威或重要的人时会更谨慎。",
+      nextStep: "找出最难拒绝的一类人，提前准备一句简短回应。"
+    },
+    high: {
+      portrait: "你的边界清晰稳定，别人容易理解你的选择；偶尔要避免过早把协商空间关掉。",
+      nextStep: "在安全关系里多问一句：“我们有没有两边都可接受的办法？”"
+    }
+  },
+  action: {
+    low: {
+      portrait: "你容易用准备和设想替代开始，任务越重要，迈出第一步越费力。",
+      nextStep: "只做一个 10 分钟的粗糙版本，不评价质量。"
+    },
+    midLow: {
+      portrait: "你能处理明确的小事，但遇到不确定或可能被评价的任务，启动速度会明显下降。",
+      nextStep: "把任务切成一个今天能交付的最小结果。"
+    },
+    midHigh: {
+      portrait: "你通常能边做边调整，少数重要任务仍可能卡在最后的曝光或交付环节。",
+      nextStep: "把未完成版本交给一个可信任的人先看。"
+    },
+    high: {
+      portrait: "你擅长把想法迅速变成行动，并从反馈中修正方向；要留意速度快过思考。",
+      nextStep: "重大决定启动前，增加一次风险和停止条件检查。"
+    }
+  },
+  openness: {
+    low: {
+      portrait: "不同意见很容易被你听成否定，你会先保护立场，再判断信息是否有用。",
+      nextStep: "反驳前先复述对方观点，并问一个澄清问题。"
+    },
+    midLow: {
+      portrait: "情绪平稳后你愿意吸收建议，但被指出问题的第一刻仍容易进入防御。",
+      nextStep: "把第一反应写下来，区分事实和自己的解释。"
+    },
+    midHigh: {
+      portrait: "你大多能把意见和自我价值分开，也愿意修正判断；尖锐表达仍可能让你关闭片刻。",
+      nextStep: "先提取对方观点里一个可验证的部分。"
+    },
+    high: {
+      portrait: "你能主动寻找反例并更新看法，不会把改主意当成丢脸；要避免过度怀疑自己。",
+      nextStep: "吸收反馈时，也保留自己已有证据和判断。"
+    }
+  },
+  responsibilityResilience: {
+    low: {
+      portrait: "出问题时，你可能在推开责任和过度自责之间摆动，较难迅速回到可行动的位置。",
+      nextStep: "只写两栏：我能负责什么、哪些不由我控制。"
+    },
+    midLow: {
+      portrait: "你愿意承担责任，但失败后的情绪恢复较慢，复盘容易变成反复责怪自己。",
+      nextStep: "复盘只保留一个改进动作，并给它明确日期。"
+    },
+    midHigh: {
+      portrait: "你通常能承认自己的部分并重新开始，连续受挫时才会明显消耗信心。",
+      nextStep: "连续受挫时，先缩小目标，而不是加倍逼迫自己。"
+    },
+    high: {
+      portrait: "你能承担、复盘并快速恢复，是团队和关系里的稳定力量；要警惕习惯性独自扛住。",
+      nextStep: "在还撑得住时就提出一次具体求助。"
+    }
+  }
+};
 
 function resolveDimension(dimKey, score) {
   const tier = getScoreTier(score);
@@ -12,6 +112,9 @@ function resolveDimension(dimKey, score) {
   return {
     ...base,
     ...variants,
+    tier,
+    band: scoreBands[tier],
+    scoreCopy: dimensionScoreCopy[dimKey][tier],
     microSteps: variants.microSteps || base.microSteps,
     practice: variants.practice || base.practice,
   };
@@ -499,6 +602,10 @@ function renderQuestion() {
 
   if (!question) return;
 
+  quizPanel.classList.remove("is-hidden");
+  questionText.hidden = false;
+  scaleOptions.hidden = false;
+
   questionNumber.textContent = `第 ${currentIndex + 1} 题`;
   contextLabel.textContent = "请按第一反应选择";
   questionText.textContent = question.text;
@@ -535,6 +642,7 @@ function renderQuestion() {
     "aria-pressed",
     hesitations[currentIndex] ? "true" : "false"
   );
+  hesitationToggle.disabled = false;
 
   prevButton.disabled = currentIndex === 0;
 
@@ -662,7 +770,7 @@ function showResults() {
   );
 
   const highScores = scores.filter(
-    (item) => item.score >= 72
+    (item) => item.score >= 80
   );
 
   const strengths =
@@ -684,7 +792,7 @@ function showResults() {
     .filter((item) => !strengthKeys.has(item.key));
 
   const lowScores = riskPool.filter(
-    (item) => item.score <= 62
+    (item) => item.score <= 55
   );
 
   const risks =
@@ -698,7 +806,7 @@ function showResults() {
       : "watch";
 
   const balancedCount = scores.filter(
-    (item) => item.score >= 64 && item.score <= 82
+    (item) => item.score >= 60 && item.score <= 79
   ).length;
 
   const responseInfo = calculateResponsePattern();
@@ -729,7 +837,10 @@ function showResults() {
   }
 
   if (riskHeading) {
-    riskHeading.textContent = "性格盲区";
+    riskHeading.textContent =
+      riskMode === "blindspot"
+        ? "明显劣势"
+        : "优先关注";
   }
 
   if (resultSummary) {
@@ -743,21 +854,28 @@ function showResults() {
   }
 
   if (scoreGrid) {
-    scoreGrid.innerHTML = scores
-      .map((item) => {
+    scoreGrid.innerHTML = `
+      <div class="score-guide">
+        <strong>分数怎么看</strong>
+        <span>≤55 明显劣势</span>
+        <span>60–69 待提升</span>
+        <span>70–79 稳定区</span>
+        <span>≥80 明显优势</span>
+      </div>
+      ${scores.map((item) => {
         return `
           <article class="score-row">
             <div class="score-label">
               <span>${item.name}</span>
-              <span>${Math.round(item.score)}</span>
+              <span>${Math.round(item.score)} · ${item.band.label}</span>
             </div>
             <div class="score-bar" aria-hidden="true">
               <span style="width: ${item.score}%"></span>
             </div>
           </article>
         `;
-      })
-      .join("");
+      }).join("")}
+    `;
   }
 
   if (strengthList) {
@@ -788,8 +906,8 @@ function showResults() {
   }
 
   if (blindspotDetails) {
-    blindspotDetails.innerHTML = risks
-      .map((item) => renderBlindspot(item, riskMode))
+    blindspotDetails.innerHTML = scores
+      .map((item) => renderDimensionDetail(item))
       .join("");
   }
 
@@ -807,7 +925,7 @@ function showResults() {
 }
 
 function buildResultTitle(topStrength, topRisk, meta) {
-  if (meta.averageScore >= 84 && topRisk.score >= 64) {
+  if (meta.averageScore >= 82 && topRisk.score >= 70) {
     return "向阳蓄力的木棉花";
   }
 
@@ -817,14 +935,14 @@ function buildResultTitle(topStrength, topRisk, meta) {
 
   if (
     topStrength.key === "responsibilityResilience" &&
-    topStrength.score >= 72
+    topStrength.score >= 80
   ) {
     return "稳稳撑开的榕树";
   }
 
   if (
     topStrength.key === "action" &&
-    topStrength.score >= 72
+    topStrength.score >= 80
   ) {
     return "破土向上的春笋";
   }
@@ -852,52 +970,15 @@ function buildResultTitle(topStrength, topRisk, meta) {
 }
 
 function buildResultSummary(strengths, risks, meta) {
-  const strengthNames = strengths
-    .map((item) => item.name)
-    .join("、");
-
-  const riskNames = risks
-    .map((item) => item.name)
-    .join("、");
-
   const topStrength = strengths[0];
   const topRisk = risks[0];
-  const secondRisk = risks[1] || risks[0];
+  const strengthLabel = meta.strengthMode === "strong" ? "明确优势" : "当前最高项";
+  const riskLabel = meta.riskMode === "blindspot" ? "明显劣势" : "当前较低项";
 
-  const responseNote =
-    meta.responseInfo.level === "veryHigh"
-      ? "这一次，你在不少选择前停留得更久，也改过几次答案。这未必是摇摆，更像是在替不同的关系、处境和压力留出余地。你知道，同一件事落在不同的时刻，心里的答案也会不同。"
-      : meta.responseInfo.level === "high"
-        ? "有些题目，你没有急着把答案钉死。这份迟疑不必急着纠正，它也许说明你正在认真辨认：什么才更接近真实的自己。"
-        : meta.responseInfo.level === "medium"
-          ? "有些答案不必立刻定论。可以慢慢留意：在什么人面前、什么压力之下，你会比平时更靠近自己，或更远离自己。"
-          : "";
-
-  const strengthLead =
-    meta.strengthMode === "strong"
-      ? `你身上最常亮起来的，是${strengthNames}。它们不是写在纸上的优点，而是你已经带着走过关系、压力和选择的方式。${topStrength.edge}`
-      : `${strengthNames}是你较能依靠的部分。它们未必总是显眼，却像夜路边一盏不太刺目的灯：在局面变乱时，仍帮你留住方向。`;
-
-  const riskLead =
-    meta.riskMode === "blindspot"
-      ? `真正容易让你绕远路的，是${riskNames}。它们不代表你不够好，更像一些旧的自我保护：曾经替你挡过风，只是有时也会把你困在原地。${topRisk.shadow}`
-      : `${riskNames}值得被轻轻看见。它们平时未必有声音，但在亲密关系、压力来临或被评价的时候，可能会悄悄接过方向盘。${topRisk.shadow}`;
-
-  const balanceLead =
-    meta.balancedCount >= 4
-      ? "你不是一个可以被单一标签概括的人。很多看似不起眼的模式，像水面下反复出现的暗礁；能看见它们的位置，就已经少了一次撞上去的可能。"
-      : "";
-
-  const paragraphs = [
-    strengthLead,
-    `${riskLead}${topRisk.empathy}`,
-    `${topRisk.hardTruth}那些“明明知道，却还是会这样”的时刻，并不是无解，它们只是比语言更早泄露了心里的惯性。${secondRisk.cost}`,
-    `${balanceLead}${responseNote}不必一下子改变很多，可以先试着做一件很小的事：${topRisk.microSteps[0]}。`
-  ].filter(Boolean);
-
-  return paragraphs
-    .map((text) => `<p>${text}</p>`)
-    .join("");
+  return `
+    <p><strong>${strengthLabel}：${topStrength.name} ${Math.round(topStrength.score)} 分。</strong>${topStrength.scoreCopy.portrait}</p>
+    <p><strong>${riskLabel}：${topRisk.name} ${Math.round(topRisk.score)} 分。</strong>${topRisk.scoreCopy.portrait} 建议先做：${topRisk.scoreCopy.nextStep}</p>
+  `;
 }
 
 function getResultKeywords(title) {
@@ -948,29 +1029,19 @@ function getResultKeywords(title) {
 }
 
 function renderMiniStrength(item, mode) {
-  const text =
-    mode === "strong"
-      ? `这是很珍贵的一部分。${item.strength}${item.edge}别把它当成理所当然，它其实是你一路练出来的能力。`
-      : `它不一定很张扬，却很能撑事。${item.strength}${item.edge}有些优势不是闪光，是长久供电。`;
-
   return `
     <p class="mini-item">
-      <strong>${item.name}</strong>
-      ${text}
+      <strong>${item.name} · ${Math.round(item.score)} 分</strong>
+      ${item.scoreCopy.portrait}
     </p>
   `;
 }
 
 function renderMiniRisk(item, mode) {
-  const text =
-    mode === "blindspot"
-      ? `容易中招的地方：${item.risk}${item.hardTruth}${item.empathy}先不用责备自己，抓一个最常出现的场景练就好。`
-      : `值得留意的地方：${item.risk}${item.hardTruth}${item.empathy}它未必天天出现，但一出现，就会牵动你的表达、行动或关系。`;
-
   return `
     <p class="mini-item">
-      <strong>${item.name}</strong>
-      ${text}
+      <strong>${item.name} · ${Math.round(item.score)} 分</strong>
+      ${item.scoreCopy.portrait}
     </p>
   `;
 }
@@ -996,12 +1067,12 @@ function renderResponsePattern(info) {
 
   const body =
     info.level === "veryHigh"
-      ? "这不是简单的没主见。你能看到例外、对象和情境差异，所以答案不会轻易落笔。这些迟疑像一张地图：谁、什么压力、哪类评价，会让你反复校准自己。"
+      ? "你的选择很受对象和情境影响。回看犹豫最多的题，比给自己贴固定标签更有用。"
       : info.level === "high"
-        ? "你不是固定的一种样子。对象、关系和压力一变，你的反应也会变。能说出“我不确定”，本身就是一种清醒。"
+        ? "你在一些情境中会调整答案。可以留意是谁或什么压力触发了变化。"
         : info.level === "medium"
-          ? "有些题不是绝对像或不像。这个犹豫可以保留，之后放回具体事件里看，会更准。"
-          : "你对多数题目的判断比较清楚。即使看到不舒服的地方，也先把它当成信息，不急着否定自己。";
+          ? "少数题需要结合具体事件理解，不必强行得出绝对结论。"
+          : "你的选择比较明确，结果能较稳定地反映当前状态。";
 
   return `
     <h3>答题状态</h3>
@@ -1018,80 +1089,25 @@ function renderResponsePattern(info) {
 function renderDeepAnalysis(meta) {
   const topStrength = meta.strengths[0];
   const topRisk = meta.risks[0];
-  const secondRisk = meta.risks[1] || meta.risks[0];
-
-  const tensionLine =
-    `你真正卡住的地方，可能不是${topStrength.name}不够，而是${topRisk.name}在关键时刻先伸了手。不是你没有能力，是旧反应太熟，常常比理性先到一步。`;
-
-  const practiceLine = topRisk.microSteps
-    .map((step, index) => `${index + 1}. ${step}`)
-    .join("；");
-
-  const pressureLine =
-    meta.responseInfo.level === "veryHigh"
-      ? "大量犹豫说明你并不是不了解自己，只是你很受具体对象和情境影响。你需要的不是固定标签，而是一张触发地图。"
-      : meta.responseInfo.level === "high"
-        ? "这些犹豫说明你对自己并非毫无觉察。只是有些状态很吃情境：谁在场、关系多近、压力多重，都会改变你。"
-        : meta.responseInfo.level === "medium"
-          ? "你有一部分答案并不绝对。不同对象面前，你可能会有不同版本；那些让你迟疑的题，值得以后多看一眼。"
-          : "你的选择比较明确，说明你对当前的自己有稳定判断。也提醒一句：太熟悉的模式，也可能稳定地制造同一种问题。";
 
   return `
-    <h3>深层模式</h3>
+    <h3>组合提示</h3>
     <div class="deep-grid">
-      <p><strong>核心矛盾：</strong>${tensionLine}</p>
-      <p><strong>别人未必看见的优势：</strong>${topStrength.edge}</p>
-      <p><strong>最容易露馅的瞬间：</strong>${topRisk.shadow}</p>
-      <p><strong>真正消耗你的地方：</strong>${secondRisk.cost}</p>
-      <p><strong>心理学视角：</strong>${topRisk.psychologist}：${topRisk.psychAnalysis}</p>
-      <p><strong>先被理解：</strong>${topRisk.empathy}</p>
-      <p><strong>可以先这样做：</strong>${practiceLine}</p>
-      <p><strong>关键追问：</strong>${topRisk.growthQuestion}</p>
-      <p><strong>答题信号：</strong>${pressureLine}</p>
+      <p><strong>你可以借力：</strong>${topStrength.name}是当前最强项。遇到${topRisk.name}相关难题时，先调用这项能力，而不是只盯着短板。</p>
+      <p><strong>本周只练一件事：</strong>${topRisk.scoreCopy.nextStep}</p>
     </div>
   `;
 }
 
-function renderBlindspot(item, mode) {
-  const riskLabel =
-    mode === "blindspot"
-      ? "短板表现"
-      : "相对短板";
-
-  const microSteps = item.microSteps
-    .map((step) => `<li>${step}</li>`)
-    .join("");
-
+function renderDimensionDetail(item) {
   return `
     <article class="detail-card">
-      <h3>${item.name}</h3>
-      <p><strong>${riskLabel}：</strong>${item.risk}</p>
-      <p><strong>说得更直一点：</strong>${item.hardTruth.replace(/^说得更直一点：/, "")}</p>
-      <p><strong>先别急着怪自己：</strong>${item.empathy}</p>
-      <p><strong>压力下的样子：</strong>${item.shadow}</p>
-      <p><strong>现实代价：</strong>${item.cost}</p>
-      <p><strong>心理学视角：</strong>${item.psychologist}：${item.psychAnalysis}</p>
-      <p><strong>形成原因：</strong>${item.cause}</p>
-      <p><strong>改进方法：</strong>${item.advice}</p>
-      <p><strong>心理练习：</strong>${item.psychPractice}</p>
-
-      <div class="practice-box">
-        <strong>可执行的 3 个小动作：</strong>
-        <ol>${microSteps}</ol>
+      <div class="detail-heading">
+        <h3>${item.name}</h3>
+        <span>${Math.round(item.score)} 分 · ${item.band.label}</span>
       </div>
-
-      <p><strong>关键追问：</strong>${item.growthQuestion}</p>
-
-      <p>
-        <strong>本周练习：</strong>
-        选择一个真实场景，只练习一个动作；完成后记录“我做了什么、效果如何、下次微调什么”。重点不是一次改变很多，而是让这个短板进入可练习状态。
-      </p>
-
-      <div class="tag-line">
-        ${item.practice
-          .map((tag) => `<span>${tag}</span>`)
-          .join("")}
-      </div>
+      <p>${item.scoreCopy.portrait}</p>
+      <p><strong>下一步：</strong>${item.scoreCopy.nextStep}</p>
     </article>
   `;
 }
