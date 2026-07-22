@@ -1405,7 +1405,7 @@ function renderDeepAnalysis(meta) {
     <div class="deep-grid">
       <p><strong>这组分数最容易出现的误区：</strong>你可能反复调用${topStrength.name}来绕开${topRisk.name}的难题。优势用得太顺手，也会成为不碰短板的理由。</p>
       <p><strong>用优势带短板：</strong>${meta.pairProfile.leverage}</p>
-      <p class="heart-note"><strong>但我想先替你说一句：</strong>${topRisk.empathy}</p>
+      <p class="heart-note">${topRisk.empathy}</p>
       <p><strong>这个模式通常怎么长出来：</strong>${topRisk.cause}</p>
       <p><strong>如果我们说得更诚实一点：</strong>${topRisk.hardTruth}</p>
       <div class="practice-box">
@@ -1430,10 +1430,10 @@ function renderDimensionDetail(item) {
         <span>${Math.round(item.score)} 分 · ${item.band.label}</span>
       </div>
       <p>${item.scoreCopy.portrait}</p>
-      <p class="heart-note"><strong>我想先对你说：</strong>${item.empathy}</p>
+      <p class="heart-note">${item.empathy}</p>
       <p><strong>它可能让你有点累的地方：</strong>${item.cost}</p>
       <p><strong>如果我们说得更诚实一点：</strong>${item.hardTruth}</p>
-      <p class="psych-note"><strong>心理学上可以这样理解：</strong>${item.psychAnalysis}</p>
+      <p class="psych-note"><strong>从心理学角度看：</strong>${item.psychAnalysis}</p>
       <div class="practice-box">
         <strong>三步行动</strong>
         <ol>
