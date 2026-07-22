@@ -105,6 +105,110 @@ const dimensionScoreCopy = {
   }
 };
 
+const exactScorePortraits = {
+  selfRegulation: [
+    "情绪常在你意识到之前就接管反应，事后才看清发生了什么。",
+    "你已经能偶尔捕捉情绪，但通常是在语气或动作改变之后。",
+    "你对明显情绪有感觉，细小的烦躁和委屈仍容易被忽略。",
+    "你开始看见压力信号，只是当下还不容易停住原来的反应。",
+    "你能在事后复盘情绪来源，当场表达仍会觉得不自然。",
+    "你偶尔能在爆发或沉默前察觉，但还需要外部提醒才能暂停。",
+    "你对情绪已有基本识别力，高压时仍倾向先压住再处理。",
+    "你在熟悉环境里能照顾情绪，突发压力下容易回到硬撑模式。",
+    "你通常知道自己怎么了，但未必会及时告诉身边的人。",
+    "你能在多数时候调节反应，疲惫时觉察速度会明显下降。",
+    "你能把感受和行动分开，少数强刺激仍会让反应抢先。",
+    "你有稳定的情绪雷达，也逐渐能把觉察转成清楚表达。",
+    "你大多能及时识别和安放情绪，只需留意长期累积的小压力。",
+    "你的调节能力可靠，情绪很少直接伤人，但偶尔处理得过快。",
+    "你能在复杂场景中保持觉察，也愿意为真实感受留出空间。",
+    "你对内在变化非常敏锐，挑战是允许别人参与，而非独自消化。",
+    "你几乎总能提前看见情绪走向；现在更需要练习卸下管理者角色。"
+  ],
+  boundaryExpression: [
+    "你很少直接拒绝，边界通常通过委屈、沉默或撤退才显现。",
+    "你知道自己不愿意，却常在开口前先替别人找理由。",
+    "你能感觉到底线，但关系一紧张就容易把它收回去。",
+    "你偶尔会表达不便，不过常附带很多解释来减轻内疚。",
+    "你开始为自己留位置，只是拒绝后仍会反复担心关系受损。",
+    "你在小事上能说不，面对重要人物或评价压力时仍会让步。",
+    "你有基本边界感，但表达的时机常比不舒服来得晚。",
+    "你在安全关系里较清楚，在陌生或权力不对等场景中会犹豫。",
+    "你多数时候能说出需求，只在特别在意的关系里变得含糊。",
+    "你的温和与清晰开始平衡，偶尔仍会为了气氛少说一点。",
+    "你能提前表达限制，不再等到积累成怨气才开口。",
+    "你的边界比较稳定，也能给对方保留回应和协商空间。",
+    "你通常能拒绝而不攻击，关键关系中的表达也越来越一致。",
+    "你把边界当作合作条件，而不是关系威胁。",
+    "你的表达清楚且有弹性，别人通常知道如何与你相处。",
+    "你很少因拒绝而内耗，需要留意别把清晰变成过早关门。",
+    "你的边界高度稳定；成长点是允许亲密关系里存在短暂的不确定。"
+  ],
+  action: [
+    "想法经常停在准备阶段，真正开始需要很强的外部压力。",
+    "你会反复完善计划，却很少让一个不成熟版本真正出现。",
+    "你能启动紧急任务，重要但不紧急的事情容易长期搁置。",
+    "你偶尔会迈出第一步，但不确定感很快让你停下来重想。",
+    "你有行动意愿，任务一大就容易被“还没准备好”拖住。",
+    "你能完成清晰的小步骤，开放式任务仍会消耗大量启动能量。",
+    "你开始用小行动对抗拖延，只是节奏还不够稳定。",
+    "你在有反馈的任务中行动很快，独立推进时更容易徘徊。",
+    "你通常能开始，真正重要的交付节点仍可能反复打磨。",
+    "你能边做边调整，偶尔会在最后一步因为怕评价而减速。",
+    "你的行动节奏较稳，遇到高风险选择时会合理放慢。",
+    "你能把多数想法落地，也知道什么时候该停止准备。",
+    "你善于制造小完成感，并用真实反馈推动下一步。",
+    "你在不确定中仍能推进，少数时候速度会超过必要思考。",
+    "你能快速形成可验证结果，并根据反馈及时修正。",
+    "你的执行力很强，也逐渐学会为重大决定设置检查点。",
+    "行动几乎是你的默认语言；最需要防范的是忙得很快却偏离方向。"
+  ],
+  openness: [
+    "不同意见很容易被你听成否定，反驳通常先于理解发生。",
+    "你偶尔能听见建议，但首先关注的仍是对方哪里说得不对。",
+    "被指出问题时，你会明显防御，冷静后才可能重新考虑。",
+    "你开始区分批评和事实，只是尖锐语气仍会盖住信息本身。",
+    "你愿意复盘不同意见，但需要较长时间让自尊先恢复。",
+    "你能吸收温和反馈，遇到质疑式表达时仍容易关闭。",
+    "你已有更新判断的能力，第一反应偶尔还会守住原观点。",
+    "你对熟悉领域较开放，对自信很强的判断会更难松动。",
+    "你多数时候能听取意见，也会主动验证其中是否有事实依据。",
+    "你能把不喜欢的表达和有价值的信息分开，只是需要一点缓冲。",
+    "你愿意寻找反例，并能在证据变化时调整自己的结论。",
+    "你面对不同观点较从容，也能承认局部判断可能有误。",
+    "你会主动邀请反馈，同时保留独立判断而不盲从。",
+    "你能快速提取批评中的有效部分，较少陷入自我防御。",
+    "你把改主意视为更新而非失败，也能帮助讨论回到证据。",
+    "你的开放度很高，需要留意别因重视反馈而弱化自己的经验。",
+    "你几乎总能容纳反例；成长点是相信自己也可以暂时保留结论。"
+  ],
+  responsibilityResilience: [
+    "受挫后你容易在逃避责任和全盘自责之间摆动，很难马上重启。",
+    "你能看到问题，却常被羞愧或委屈困住，行动恢复得较慢。",
+    "你偶尔会复盘，但容易把一次失误解释成自己整体不够好。",
+    "你开始承担具体部分，只是失败后的情绪仍会拖长恢复时间。",
+    "你愿意负责，但常承担得过多，分不清哪些并不由你控制。",
+    "你能从小挫折中回来，连续失败时容易失去方向感。",
+    "你已有基本复原力，复盘有时仍会滑向自我批评。",
+    "你在熟悉任务中恢复较快，陌生挑战会让信心波动更久。",
+    "你通常能承认自己的部分，也开始把责任和自我价值分开。",
+    "你能在受挫后重新行动，只是偶尔需要较长的心理缓冲。",
+    "你的复盘较具体，较少用借口或过度自责替代改进。",
+    "你能承担后果并调整方法，连续压力下也能保持基本节奏。",
+    "你有稳定的复原能力，也知道不把所有问题都揽到自己身上。",
+    "你能迅速从错误中提取经验，较少让失败定义自己。",
+    "你在压力下仍可靠，也愿意让别人分担一部分重量。",
+    "你的责任感和恢复力都很强，需要警惕习惯性成为唯一托底者。",
+    "你几乎总能承担并重启；下一步是允许自己在尚未耗尽时就求助。"
+  ]
+};
+
+function getExactScorePortrait(dimKey, score) {
+  const normalizedScore = Math.max(20, Math.min(100, Math.round(score / 5) * 5));
+  const index = (normalizedScore - 20) / 5;
+  return exactScorePortraits[dimKey][index];
+}
+
 function resolveDimension(dimKey, score) {
   const tier = getScoreTier(score);
   const base = dimensions[dimKey];
@@ -114,7 +218,10 @@ function resolveDimension(dimKey, score) {
     ...variants,
     tier,
     band: scoreBands[tier],
-    scoreCopy: dimensionScoreCopy[dimKey][tier],
+    scoreCopy: {
+      ...dimensionScoreCopy[dimKey][tier],
+      portrait: getExactScorePortrait(dimKey, score)
+    },
     microSteps: variants.microSteps || base.microSteps,
     practice: variants.practice || base.practice,
   };
@@ -971,13 +1078,21 @@ function buildResultTitle(topStrength, topRisk, meta) {
 
 function buildResultSummary(strengths, risks, meta) {
   const topStrength = strengths[0];
+  const secondStrength = strengths[1] || strengths[0];
   const topRisk = risks[0];
+  const secondRisk = risks[1] || risks[0];
   const strengthLabel = meta.strengthMode === "strong" ? "明确优势" : "当前最高项";
   const riskLabel = meta.riskMode === "blindspot" ? "明显劣势" : "当前较低项";
+  const responseTail = {
+    clear: "你的选择较明确，这组排序有较好的稳定性。",
+    medium: "少数犹豫题可能让相邻维度互换位置，重点看分数区间而非名次。",
+    high: "你的表现受情境影响较明显，建议结合具体关系和压力场景理解。",
+    veryHigh: "你的答案随情境变化很大，这份结果更适合作为触发线索，而不是固定标签。"
+  }[meta.responseInfo.level];
 
   return `
-    <p><strong>${strengthLabel}：${topStrength.name} ${Math.round(topStrength.score)} 分。</strong>${topStrength.scoreCopy.portrait}</p>
-    <p><strong>${riskLabel}：${topRisk.name} ${Math.round(topRisk.score)} 分。</strong>${topRisk.scoreCopy.portrait} 建议先做：${topRisk.scoreCopy.nextStep}</p>
+    <p><strong>${strengthLabel}：${topStrength.name} ${Math.round(topStrength.score)} 分。</strong>${topStrength.scoreCopy.portrait} ${secondStrength.name}排在其后，说明你更可能用前者带动后者。</p>
+    <p><strong>${riskLabel}：${topRisk.name} ${Math.round(topRisk.score)} 分。</strong>${topRisk.scoreCopy.portrait} 当${secondRisk.name}也承压时，这个模式会更明显。${responseTail}</p>
   `;
 }
 
